@@ -4,7 +4,7 @@ dotenv.config();
 
 // Centralized Enviornment Variable
 
-const env = ["PORT", "MONGODB_URI", "JWT_SECRET", "Client_Id", "Client_Secret", "Redirect_Uris"];
+const env = ["PORT", "MONGODB_URI", "JWT_SECRET", "Client_Id", "Client_Secret", "Redirect_Uris" , "NODE_ENV"];
 
 export const requiredEnv = {
     "PORT": process.env.PORT || "3000",
@@ -13,6 +13,7 @@ export const requiredEnv = {
     "client_id": process.env.Client_Id as string,
     "client_secret": process.env.Client_Secret as string,
     "redirect_uris": process.env.Redirect_Uris as string,
+    "NODE_ENV":process.env.NODE_ENV as string,
 }
 
 env.forEach((env) => {
