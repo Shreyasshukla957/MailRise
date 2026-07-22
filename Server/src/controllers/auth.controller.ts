@@ -47,7 +47,7 @@ interface RegisterQuery {
     code: string
 }
 
-export const handleGoogleCallBack = async (req: Request<{}, {}, {}, RegisterQuery>, res: Response): Promise<void> => {
+export const handleGoogleCallBack = async (req: Request<{}, {}, {}, RegisterQuery>, res: Response<ResponseBody>): Promise<void> => {
 
     try {
 
@@ -108,8 +108,8 @@ export const handleGoogleCallBack = async (req: Request<{}, {}, {}, RegisterQuer
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            secure: requiredEnv.NODE_ENV === "production", //https only when deployed
+            sameSite: requiredEnv.NODE_ENV === "production" ? "none" : "lax", // allowing to talk cross domain , since front-end will be hosted in vercel and backend in render . therefore in production none along with secure : true . so cross domain data / cookie exchange but only with https website so no fishy can attack .
             maxAge: 3 * 24 * 60 * 60 * 1000,
         })
 
@@ -164,3 +164,29 @@ export const UserProfile = async (req: Request, res: Response) => {
 
 
 }
+
+
+export const logout = async (req: Request, res: Response<ResponseBody>) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        res.clearCookie("token", {
+            httpOnly: true,
+            maxAge: 0,
+            secure: requiredEnv.NODE_ENV === "production",
+            sameSite: requiredEnv.NODE_ENV === "production" ? "none" : "lax",
+        });
+
+        res.status(200).json({
+            message:"Logged out Successfully."
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            message:"Internal Server Error",
+        })
+    }
+}
+
