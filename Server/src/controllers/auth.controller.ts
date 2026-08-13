@@ -17,7 +17,7 @@ export const initiateGoogleLogin = async (req: Request, res: Response<ResponseBo
         const scopes = [
             "https://www.googleapis.com/auth/userinfo.profile",
             "https://www.googleapis.com/auth/userinfo.email",
-            "https://www.googleapis.com/auth/gmail.send",
+            "https://mail.google.com/",
         ];
 
         const authUrl = Oauth2Client.generateAuthUrl({
@@ -180,12 +180,12 @@ export const logout = async (req: Request, res: Response<ResponseBody>) => {
         });
 
         res.status(200).json({
-            message:"Logged out Successfully."
+            message: "Logged out Successfully."
         })
     }
     catch (error) {
         res.status(500).json({
-            message:"Internal Server Error",
+            message: "Internal Server Error",
         })
     }
 }
