@@ -1,6 +1,9 @@
 import type { Request, Response } from "express"
 import { ai } from "../services/geminiService.js"
 import { History } from "../models/History.js"
+import { User } from "../models/User.js"
+import { Oauth2Client } from "../config/googleOauth.js"
+import { DispatchMail } from "../services/mailService.js"
 
 
 const systemPrompt = `
@@ -98,7 +101,7 @@ export const generateEmail = async (req: Request<{}, {}, RequestBody>, res: Resp
         } else {
             // Naya document create karo:
             historyDoc = await History.create({
-                userId: (req.user as any)?._id ,
+                userId: (req.user as any)?._id,
                 tone,
                 prompt: [
                     { role: "user", message: userPrompt },
@@ -115,9 +118,9 @@ export const generateEmail = async (req: Request<{}, {}, RequestBody>, res: Resp
         }
 
         res.status(200).json({
-            historyId:historyDoc._id,
-            body:data?.message?.body || data?.body,
-            subject:data?.message?.subject || data?.subject,
+            historyId: historyDoc._id,
+            body: data?.message?.body || data?.body,
+            subject: data?.message?.subject || data?.subject,
         });
 
 
@@ -125,6 +128,79 @@ export const generateEmail = async (req: Request<{}, {}, RequestBody>, res: Resp
     } catch (error) {
         console.error("Generate Email Controller Error:", error);
         res.status(500).json({ message: "Internal Server Error" });
+    }
+
+}
+
+
+interface SendEmailBody {
+
+    historyId: string;
+    recipient: string;
+    subject: string;
+    body: string;
+}
+
+
+export const sendEmail = async (req: Request<{}, {}, SendEmailBody>, res: Response) => {
+
+    try {
+        const { historyId, recipient, subject, body } = req.body;
+
+        if (!historyId || !recipient || !subject || !body) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+
+        const user = req.user as any;
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const { refreshtoken, emailId } = user;
+
+        if (!refreshtoken || !emailId) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        Oauth2Client.setCredentials({
+            refresh_token: refreshtoken,
+        })
+
+        const { token: access_token } = await Oauth2Client.getAccessToken();
+
+        if (!access_token) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        const data = await DispatchMail({
+            userEmail: emailId,
+            refreshtoken,
+            access_token,
+            recipient,
+            subject,
+            body,
+
+        });
+
+        if (! data || ! data.accepted || data.accepted.length === 0) {
+            await History.findByIdAndUpdate(historyId , {status:"failed"} , {runValidators:true , new:true})
+            return res.status(400).json({message:"Email wasn't send , problem occured !"});
+        }
+
+       const latestdata = await History.findByIdAndUpdate(historyId , {status:"success"} , {runValidators:true , new:true});
+
+        res.status(200).json({
+            message:"Email was sent.",
+            historyId:latestdata?._id,
+            status:latestdata?.status || "success",
+        })
+
+    }
+    catch (error) {
+        console.error("Send Email Controller Error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+
     }
 
 }
