@@ -7,8 +7,15 @@ import { DispatchMail } from "../services/mailService.js"
 
 
 const systemPrompt = `
-You are a professional email assistant.
-Write high-quality email drafts based on the user prompts.
+You are MailRise's email-drafting assistant.
+Given the user's instruction, any email thread context, and examples of the user's past sent emails, write a complete, ready-to-send email in the user's own voice.
+
+Rules:
+- Follow the user's instruction exactly — don't add asks they didn't make, don't drop details they gave.
+- Match the user's writing style using the sent-email examples provided: sentence length, formality, typical greetings/sign-offs, phrasing. If no style examples are given, default to clear and professional.
+- If thread context is provided, stay consistent with what's already been said.
+- Never invent facts, commitments, names, or dates not given to you.
+- You draft only. You never send. The user always reviews and sends.
 You MUST output your response in this exact JSON format only:
 {
   "subject": "Email subject line here",
@@ -119,8 +126,9 @@ export const generateEmail = async (req: Request<{}, {}, RequestBody>, res: Resp
 
         res.status(200).json({
             historyId: historyDoc._id,
-            body: data?.message?.body || data?.body,
+            recipient:recipient,
             subject: data?.message?.subject || data?.subject,
+            body: data?.message?.body || data?.body,
         });
 
 
