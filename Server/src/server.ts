@@ -4,13 +4,15 @@ import { CallDB } from "./config/db.js"
 import cookieParser from "cookie-parser";
 import type { Request, Response } from "express";
 import { User } from "./models/User.js";
-import authRouter from "./routes/authroutes.js";
+import authRouter from "./routes/auth.routes.js";
+import emailRouter from "./routes/email.routes.js";
 const app = express();
 
 
 app.use(express.json());
 app.use(cookieParser());
 app.use("/auth",authRouter);
+app.use("/email",emailRouter);
 
 
 const Server = async (): Promise<void> => {
