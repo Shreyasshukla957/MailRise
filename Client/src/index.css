@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:ital,wght@0,100..900;1,100..900&family=Geist:ital,wght@0,100..900;1,100..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Manrope:wght@200..800&family=Orbitron:wght@400..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Share+Tech+Mono&display=swap');
+
+@import "tailwindcss";
+
+
+@custom-variant dark (&:is(.dark *));
+
+
+:root {
+  /* ☀️ LIGHT MODE: Pure White Canvas & Radiant Warm Flame Orange */
+  --bg-screen: #FAFFFF;          /* Pure Clean White Canvas */
+  --bg-card: #faf9f6;            /* Warm Porcelain White Card */
+  --bg-panel: #ffffff;           /* White Text on Orange Button */
+  --bg-hover: #ffedd5;           /* Soft Tangerine Orange Hover */
+
+  --text-headline: #18181b;       /* Deep Charcoal Ink Title */
+  --text-body: #52525b;           /* Warm Slate-Zinc Body */
+  --text-subtle: #71717a;         /* Muted Silver-Gray */
+  --text-mdark: #18181b;          /* High-Contrast Bold Text */
+
+  --border-default: #e4e4e7;      /* Clean 1px Zinc-200 Hairline */
+  --border-shiny: rgba(255, 106, 0, 0.35); /* Shiny Warm Amber Edge */
+  --border-focus: #ff6a00;        /* Radiant Flame Orange CTA & Focus */
+
+  --accent-primary: #ff6a00;      /* Signature Flame Orange CTA */
+  --accent-bright: #f97316;       /* Sunburst Orange Highlight */
+  --accent-glow: oklch(55.6% 0 none); 
+  --accent-border: #73737326;
+
+  --bg-theme:#c9c9c9;
+  --bg-themeborder:#b1b1b1;
+
+  --status-success: #059669;      /* Emerald passed tag */
+  --status-failed: #dc2626;       /* Coral failed tag */
+
+
+  --shadow-button:12px 14px 17px 0px rgba(0,0,0,0.1),
+  /* -52px 35px 25px 0px rgba(0,0,0,0.4),
+  -29px 19px 21px 0px rgba(0,0,0,0.15), */
+  -10px 3px 16px 0px rgba(70, 70, 70, 0.15);
+  /* -3px 2px 9px 0px rgba(0,0,0,0.19); */
+}
+
+.dark {
+  /* 🌙 DARK MODE: Deep Zinc-950 Canvas & Polished Chromium Silver Buttons */
+  --bg-screen: oklch(14.1% 0.005 285.823);          /* Deep Neutral Zinc-950 Canvas */
+  --bg-card: #121215;            /* Solid Zinc-900 Card */
+  --bg-panel: #09090b;           /* Deep Zinc-950 Dark Text on Silver Button! */
+  --bg-hover: #27272a;           /* Zinc-800 Active/Hover */
+
+  --text-headline: #f8fafc;       /* High-Luster Chromium Platinum White Title */
+  --text-body: #e2e8f0;           /* Bright Silver Chrome Body */
+  --text-subtle: #7c7e82;         /* Muted Chrome Silver Subtitle */
+  --text-mdark: #f1f5f9;          /* Opal Silver Highlight */
+
+  --border-default: rgba(255, 255, 255, 0.09); /* 1px Hairline Silver/Zinc Edge */
+  --border-shiny: rgba(244, 244, 245, 0.35);    /* Shiny Silver Hairline */
+  --border-focus: #f4f4f5;        /* Polished Chromium Silver CTA & Focus */
+
+  --accent-primary: #f4f4f5;      /* Polished Chromium Silver CTA */
+  --accent-bright: #ffffff;       /* Pure White Highlight */
+  --accent-glow: oklch(97% 0 none); /* Luminous Silver Bloom Shadow */
+  --accent-border: #f5f5f526;
+
+  --bg-theme:#ff6a00;
+  --bg-themeborder:#f97316;
+
+  --status-success: #10b981;      /* Bright Emerald passed tag */
+  --status-failed: #ef4444;       /* Coral Red failed tag */
+
+  --shadow-button:12px 14px 17px 0px rgba(0,0,0,0.1),
+  /* -52px 35px 25px 0px rgba(255,255,255,0.4),
+  -29px 19px 21px 0px rgba(255,255,255,0.15), */
+  -10px 3px 16px 0px rgba(255,255,255,0.15);
+  /* -3px 2px 9px 0px rgba(255,255,255,0.19; */
+ 
+
+}
+
+@theme {
+  /* 🔤 Font Family Utilities */
+  --font-manrope: "Manrope", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-geistmono: "Geist Mono", monospace;
+  --font-hanken: "Hanken Grotesk", sans-serif;
+  --font-orbitron: "Orbitron", sans-serif;
+  --font-share: "Share Tech Mono", monospace;
+  --font-rubik:"Rubik","Inter";
+  --font-lora:"Lora","Inter";
+  --font-geist:"Geist","Inter";
+
+  /* 🎨 Semantic Color Utilities */
+  --color-screen: var(--bg-screen);
+  --color-card: var(--bg-card);
+  --color-panel: var(--bg-panel);
+  --color-hover: var(--bg-hover);
+  --color-theme:var(--bg-theme);
+  --color-themeborder:var(--bg-themeborder);
+
+  --color-headline: var(--text-headline);
+  --color-body: var(--text-body);
+  --color-subtle: var(--text-subtle);
+  --color-mdark: var(--text-mdark);
+
+  --color-default: var(--border-default);
+  --color-shiny: var(--border-shiny);
+  --color-focus: var(--border-focus);
+
+  --color-accent: var(--accent-primary);
+  --color-bright: var(--accent-bright);
+  --color-glow: var(--accent-glow);
+  --color-border: var(--accent-border);
+
+  --color-success: var(--status-success);
+  --color-failed: var(--status-failed);
+
+  --shadow-border:var(--shadow-button);
+
+}
+
+body {
+  background-color: var(--bg-screen);
+  color: var(--text-headline);
+  font-family: var(--font-inter);
+  transition: background-color 0.25s ease, color 0.25s ease;
+  overflow-x: hidden;
+}
