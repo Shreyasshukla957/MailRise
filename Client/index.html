@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    html.dark {
+      background-color: #09090b;
+      color-scheme: dark;
+    }
+
+    html:not(.dark) {
+      background-color: #faf9f6;
+      color-scheme: light;
+    }
+  </style>
+
+  <script>   (function () {
+      const theme = localStorage.getItem("mailrise-theme");
+      // Default to dark mode if not set to 'light'
+      if (theme !== "light") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    })();</script>
+  <title>client</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx">
+  </script>
+</body>
+
+</html>
