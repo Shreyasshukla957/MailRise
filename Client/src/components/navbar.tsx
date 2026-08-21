@@ -35,7 +35,7 @@ export const Navbar = ({
     >
       {/* logo */}
       <div className="flex items-center">
-        <img src="./image.png" className="h-9 w-auto pb-1" />
+        <img src="./image.webp" className="h-9 w-auto pb-1" />
         <span className="hover:text-focus font-geistmono cursor-pointer font-semibold tracking-tighter transition-all duration-200">
           Mailrise
         </span>
@@ -47,7 +47,7 @@ export const Navbar = ({
           {navlinks.map((items) => {
             return (
               <a
-                className="text-subtle hover:text-mdark group hover:bg-glow/10 relative rounded-md p-2 font-light text-[15px] transition-all duration-200 text-shadow-xs"
+                className="text-subtle hover:text-mdark group hover:bg-glow/10 relative rounded-md p-2 text-[15px] font-light transition-all duration-200 text-shadow-xs"
                 href={items.href}
                 key={items.href}
               >
@@ -62,20 +62,28 @@ export const Navbar = ({
         <Theme className="cursor-pointer" />
 
         <div className="flex items-center justify-center gap-4">
-          {/* Login */}
           <button className="text-focus border-focus flex cursor-pointer rounded-xl border px-3 py-2 text-[14px] font-semibold shadow-sm text-shadow-sm">
             Sign In
           </button>
 
-          {/* get started */}
-          <div className="border-focus/30 bg-focus/5 hover:border-focus group flex cursor-pointer rounded-md border p-[1.5px] transition-all duration-200 hover:shadow-[inset_0_0_2px_0.5px_var(--accent-bright)]">
-            <button className="bg-focus text-panel group flex cursor-pointer rounded-md px-3 py-1.5 text-[14px] font-semibold shadow-md text-shadow-md">
-              Get Started{" "}
-              <ArrowRight className="ml-px flex items-center justify-center pb-1 transition-transform duration-200 group-hover:translate-x-0.5" />
-            </button>
-          </div>
+         
+          <GetStarted className="border-focus/30 bg-focus/5 hover:border-focus group flex cursor-pointer rounded-md border p-[1.5px] transition-all duration-200 hover:shadow-[inset_0_0_2px_0.5px_var(--accent-bright)]" label="Get Started"/>
+
         </div>
       </div>
     </div>
   );
 };
+
+
+export const GetStarted = ({className , label = "Get Started"}:{className?:string , label?:string})=>{
+  return(
+    <div className={cn("",className)}>
+    <button className="bg-focus text-panel group flex cursor-pointer rounded-md px-3 py-1.5 text-[14px] font-semibold shadow-md text-shadow-md">
+      {label}
+      <ArrowRight className="ml-px flex items-center justify-center pb-1 transition-transform duration-200 group-hover:translate-x-0.5" />
+    </button>
+  </div>
+  )
+
+}
