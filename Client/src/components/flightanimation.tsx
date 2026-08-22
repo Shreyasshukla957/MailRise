@@ -4,11 +4,14 @@ import { motion } from "motion/react";
 
 export const Flightanimation = ({
   className,
+  props,
 }: {
   className?: string;
+  props?:string;
+
 }): React.JSX.Element => {
-  const flightpath =
-    "M471.191 614.718C463.691 622.718 483.191 507.041 456.691 467.118C430.191 427.195 56.6908 518.618 25.1908 450.218C-6.30919 381.818 -7.80929 187.218 25.1908 144.609C58.1909 102.001 460.691 180.888 481.691 137.218C502.691 93.5486 481.691 0.218262 481.691 0.218262";
+  const flightpath = props
+   ;
   return (
     <div className={cn("", className)}>
       <svg
