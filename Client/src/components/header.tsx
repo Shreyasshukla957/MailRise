@@ -60,4 +60,20 @@ export const Header = ({
   );
 };
 
+export const Ctabutton = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn(
+        "relative flex h-12 w-34 items-center justify-center rounded-md bg-[var(--border-insetbutton)]",
+        className
+      )}
+    >
+      <span className="font-hanken flex items-center justify-center text-[13px] font-medium text-white">
+        Sign up for free <ArrowRight size={17} className="ml-1" />
+      </span>
+      <div className="absolute inset-y-0 top-0.5 right-0.5 bottom-0.5 left-0.5 h-11 w-33 rounded-md border-1 border-(--color-diminset) transition-all duration-400 hover:border-(--color-inset) hover:shadow-[inset_0px_0px_3px_1px_var(--accent-inset)]"></div>
+    </div>
+  );
+};
+
 
