@@ -76,4 +76,26 @@ export const Ctabutton = ({ className }: { className?: string }) => {
   );
 };
 
-
+const Conicalgrad = ({
+  className,
+  dura = 3,
+}: {
+  className?: string;
+  dura?: number;
+}) => {
+  return (
+    <motion.div
+      animate={{ rotate: [0, 360] }}
+      transition={{
+        repeat: Infinity,
+        duration: dura,
+        ease: "easeIn",
+        repeatType: "reverse",
+      }}
+      className={cn(
+        "absolute -inset-[200%] z-1 rounded-md bg-[conic-gradient(from_0deg,transparent_0_300deg,var(--border-focus)_360deg)] opacity-90",
+        className
+      )}
+    />
+  );
+};
