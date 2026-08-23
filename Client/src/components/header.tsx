@@ -47,7 +47,15 @@ export const Header = ({
         emails and take them from draft to delivery, all in one workspace.
       </h2>
 
-      
+      <div className="mt-10 flex cursor-pointer items-center justify-center gap-x-5">
+        <div className="border-subtle flex h-12 w-35 items-center justify-center rounded-md border shadow-[inset_0px_0px_2px_0.5px_var(--color-subtle)] ">
+          <span className="text-headline/50 border-subtle bg-card flex h-[90%] w-[95%] items-center justify-center rounded-md border text-xs shadow-xs ">
+            <Play size={12} className="text-subtle/90 mx-1" /> Watch Demo
+          </span>
+        </div>
+
+        <Ctabutton className="" />
+      </div>
     </div>
   );
 };
