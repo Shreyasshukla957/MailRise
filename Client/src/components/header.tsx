@@ -47,11 +47,9 @@ export const Header = ({
         emails and take them from draft to delivery, all in one workspace.
       </h2>
 
-      <div className="mt-10 flex cursor-pointer items-center justify-center gap-x-5">
-        <div className="border-subtle flex h-12 w-35 items-center justify-center rounded-md border shadow-[inset_0px_0px_2px_0.5px_var(--color-subtle)] ">
-          <span className="text-headline/50 border-subtle bg-card flex h-[90%] w-[95%] items-center justify-center rounded-md border text-xs shadow-xs ">
-            <Play size={12} className="text-subtle/90 mx-1" /> Watch Demo
-          </span>
+      <div className="mt-10 mr-2 flex cursor-pointer items-center justify-center gap-x-5">
+        <div className="border-subtle font-lora text-mdark flex h-14.5 w-40.5 items-center justify-center rounded-xl border text-[14px] hover:shadow-[inset_0px_0px_2px_0.5px_var(--color-subtle)] transition-shadow duration-200 ease-in font-medium pl-1">
+          <Play size={16} className="text-subtle/90 mr-1" /> Watch Demo
         </div>
 
         <Ctabutton className="" />
@@ -64,14 +62,14 @@ export const Ctabutton = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "relative flex h-12 w-34 items-center justify-center rounded-md bg-[var(--border-insetbutton)]",
+        "relative flex h-14 w-40.5 items-center justify-center rounded-md bg-[var(--color-focus)]",
         className
       )}
     >
-      <span className="font-hanken flex items-center justify-center text-[13px] font-medium text-white">
+      <span className="font-lora dark:text-panel flex items-center justify-center text-[14px] font-medium text-white">
         Sign up for free <ArrowRight size={17} className="ml-1" />
       </span>
-      <div className="absolute inset-y-0 top-0.5 right-0.5 bottom-0.5 left-0.5 h-11 w-33 rounded-md border-1 border-(--color-diminset) transition-all duration-400 hover:border-(--color-inset) hover:shadow-[inset_0px_0px_3px_1px_var(--accent-inset)]"></div>
+      <div className="border-hover/30 hover:border-hover/90 absolute  h-13 w-39 rounded-md border-1 transition-all duration-300 hover:shadow-[inset_0px_0px_3px_1px_var(--accent-inset)] "></div>
     </div>
   );
 };
