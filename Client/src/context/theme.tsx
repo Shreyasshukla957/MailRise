@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Sun, Moon } from "lucide-react";
+import { Sun } from "lucide-react";
+import { RxMoon } from "react-icons/rx";
 
 export const Theme = ({
   className,
@@ -32,7 +33,7 @@ export const Theme = ({
               : "scale-0 rotate-45 opacity-0"
           }`}
         />
-        <Moon
+        <RxMoon
           size={35}
           className={`absolute p-2 transition-[transform,opacity] duration-100 ${
             dark
