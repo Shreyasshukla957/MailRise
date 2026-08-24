@@ -66,24 +66,32 @@ export const Navbar = ({
             Sign In
           </button>
 
-         
-          <GetStarted className="border-focus/30 bg-focus/5 hover:border-focus group flex cursor-pointer rounded-md border p-[1.5px] transition-all duration-200 hover:shadow-[inset_0_0_2px_0.5px_var(--accent-bright)]" label="Get Started"/>
-
+          <GetStarted
+            className="border-focus/30 bg-focus/5 hover:border-focus group flex cursor-pointer rounded-md border p-[1.5px] transition-all duration-200 hover:shadow-[inset_0_0_2px_0.5px_var(--accent-bright)]"
+            label="Get Started"
+          />
         </div>
       </div>
     </div>
   );
 };
 
-
-export const GetStarted = ({className , label = "Get Started"}:{className?:string , label?:string})=>{
-  return(
-    <div className={cn("",className)}>
-    <button className="bg-focus text-panel group flex cursor-pointer rounded-md px-3 py-1.5 text-[14px] font-semibold shadow-md text-shadow-md">
-      {label}
-      <ArrowRight className="ml-px flex items-center justify-center pb-1 transition-transform duration-200 group-hover:translate-x-0.5" />
-    </button>
-  </div>
-  )
-
-}
+export const GetStarted = ({
+  className,
+  label = "Get Started",
+}: {
+  className?: string;
+  label?: string;
+}) => {
+  return (
+    <div className={cn("", className)}>
+      <button className="bg-focus text-panel group flex cursor-pointer items-center rounded-md px-3 py-2 text-[14px] font-semibold shadow-md text-shadow-md">
+        {label}
+        <ArrowRight
+          className="ml-1 flex items-center justify-center transition-transform duration-200 group-hover:translate-x-0.5"
+          size={16}
+        />
+      </button>
+    </div>
+  );
+};
