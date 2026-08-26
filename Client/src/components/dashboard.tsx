@@ -27,7 +27,76 @@ export const Dashboard = ({
       )}
     >
       <StudioHeader className="" />
-    
+      <StudioHeader2 className="" />
+      <DashboardBody className="" />
+    </div>
+  );
+};
+
+const StudioHeader = ({ className }: { className?: string }) => {
+  const NAV_TABS = [
+    {
+      id: "home",
+      label: "Home",
+      icon: IoIosHome,
+      width: "w-[60%]",
+      px: "px-3",
+    },
+    {
+      id: "workspace",
+      label: "Workspace",
+      icon: BsPersonWorkspace,
+      width: "w-[70%]",
+      px: "px-2",
+    },
+    {
+      id: "dashboard",
+      label: "Dashboard",
+      icon: MdSpaceDashboard,
+      width: "w-[70%]",
+      px: "px-2",
+    },
+    {
+      id: "profile",
+      label: "Profile",
+      icon: CgProfile,
+      width: "w-[60%]",
+      px: "px-4",
+    },
+    {
+      id: "inbox",
+      label: "Inbox",
+      icon: BsFillInboxesFill,
+      width: "w-[60%]",
+      px: "px-4",
+    },
+  ];
+
+  return (
+    <div
+      className={cn(
+        "grid h-13 w-full grid-cols-6 items-center rounded-t-md"
+      )}
+    >
+      <div className="col-span-1 flex h-[75%] items-center justify-center gap-x-1 px-4">
+        <span className="size-2.5 rounded-full bg-red-600"></span>
+        <span className="size-2.5 rounded-full bg-green-600"></span>
+        <span className="size-2.5 rounded-full bg-yellow-500"></span>
+      </div>
+
+      {NAV_TABS.map(({ id, label, icon: Icon, width, px }) => (
+        <div
+          key={id}
+          className="font-geist text-glow col-span-1 flex h-[75%] items-center justify-center"
+        >
+          <span
+            className="hover:bg-hover mx-auto flex h-full w-[90%] cursor-pointer items-center justify-center px-1 text-[13px] font-medium ease-in hover:rounded-xl text-shadow-xs"
+          >
+            <Icon size={13} className="mr-1.5 mb-1 shrink-0" />
+            <span className="truncate">{label}</span>
+          </span>
+        </div>
+      ))}
     </div>
   );
 };
