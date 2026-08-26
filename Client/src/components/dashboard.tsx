@@ -101,4 +101,85 @@ const StudioHeader = ({ className }: { className?: string }) => {
   );
 };
 
+const StudioHeader2 = ({ className }: { className?: string }) => {
+  const URL_TOOLS = [
+    {
+      id: "favorite",
+      title: "Favourite",
+      icon: Star,
+      hoverClass: "hover:text-amber-400",
+    },
+    {
+      id: "bookmark",
+      title: "Bookmark",
+      icon: Bookmark,
+      hoverClass: "hover:text-focus",
+    },
+    {
+      id: "copy",
+      title: "Copy URL",
+      icon: Copy,
+      hoverClass: "hover:text-foreground",
+    },
+    {
+      id: "extensions",
+      title: "Extensions",
+      icon: Puzzle,
+      hoverClass: "hover:text-foreground",
+    },
+  ];
+  return (
+    <div
+      className={cn(
+        "border-default bg-card/60 text-subtle flex h-9 w-full items-center justify-between border-b px-3 text-xs backdrop-blur-sm",
+        className
+      )}
+    >
+      <div className="flex items-center gap-x-2">
+        <button className="hover:text-foreground cursor-pointer transition-colors">
+          <ChevronLeft size={15} />
+        </button>
+        <button className="hover:text-foreground cursor-pointer transition-colors">
+          <ChevronRight size={15} />
+        </button>
+        <button className="hover:text-foreground ml-1 cursor-pointer transition-colors">
+          <RotateCw size={13} />
+        </button>
+        <button className="hover:text-foreground ml-1 cursor-pointer transition-colors">
+          <Mic size={13} />
+        </button>
+      </div>
+
+      <div className="border-default bg-screen/60 mx-3 flex h-9 flex-1 items-center justify-between border px-3 font-mono text-[11px] shadow-2xs">
+        <div className="text-subtle/80 flex items-center gap-x-1.5">
+          <Lock size={11} className="text-subtle/50" />
+          <span className="text-foreground/90 font-medium">
+            https://mailrise.com
+          </span>
+        </div>
+
+        <div className="text-subtle/70 flex items-center gap-x-2.5">
+          {URL_TOOLS.map(({ id, title, icon: Icon, hoverClass }) => (
+            <button
+              key={id}
+              title={title}
+              className={`cursor-pointer transition-colors ${hoverClass}`}
+            >
+              <Icon size={12} />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex items-center">
+        <img
+          src="./profile-img.jpg"
+          alt="Andrew Lee"
+          className="border-default size-6 cursor-pointer rounded-full border object-cover shadow-2xs transition-transform hover:scale-105"
+        />
+      </div>
+    </div>
+  );
+};
+
 
