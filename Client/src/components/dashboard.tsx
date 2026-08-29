@@ -10,7 +10,17 @@ import { motion } from "motion/react";
 import { Inbox } from "./Inbox";
 import { useState } from "react";
 
-
+import {
+  ChevronLeft,
+  ChevronRight,
+  RotateCw,
+  Mic,
+  Lock,
+  Star,
+  Bookmark,
+  Copy,
+  Puzzle,
+} from "lucide-react";
 
 export const Dashboard = ({
   children,
@@ -74,9 +84,7 @@ const StudioHeader = ({ className }: { className?: string }) => {
 
   return (
     <div
-      className={cn(
-        "grid h-13 w-full grid-cols-6 items-center rounded-t-md"
-      )}
+      className={cn("grid h-13 w-full grid-cols-6 items-center rounded-t-md")}
     >
       <div className="col-span-1 flex h-[75%] items-center justify-center gap-x-1 px-4">
         <span className="size-2.5 rounded-full bg-red-600"></span>
@@ -89,9 +97,7 @@ const StudioHeader = ({ className }: { className?: string }) => {
           key={id}
           className="font-geist text-glow col-span-1 flex h-[75%] items-center justify-center"
         >
-          <span
-            className="hover:bg-hover mx-auto flex h-full w-[90%] cursor-pointer items-center justify-center px-1 text-[13px] font-medium ease-in hover:rounded-xl text-shadow-xs"
-          >
+          <span className="hover:bg-hover mx-auto flex h-full w-[90%] cursor-pointer items-center justify-center px-1 text-[13px] font-medium ease-in text-shadow-xs hover:rounded-xl">
             <Icon size={13} className="mr-1.5 mb-1 shrink-0" />
             <span className="truncate">{label}</span>
           </span>
@@ -182,4 +188,103 @@ const StudioHeader2 = ({ className }: { className?: string }) => {
   );
 };
 
+const DashboardBody = ({
+  className,
+  children,
+}: {
+  className?: string;
+  children?: React.ReactNode;
+}) => {
+  const [activetab, setactivetab] = useState<"workspace" | "inbox">(
+    "workspace"
+  );
 
+  const NAV_ITEMS = [
+    { id: "home", label: "Home", icon: IoIosHome },
+    { id: "workspace", label: "Workspace", icon: BsPersonWorkspace },
+    { id: "inbox", label: "Inbox", icon: BsFillInboxesFill },
+    { id: "dashboard", label: "Dashboard", icon: MdSpaceDashboard },
+  ];
+
+  return (
+    <div
+      className={cn(
+        "bg-card divide-default grid h-135 w-full grid-cols-6 divide-x",
+        className
+      )}
+    >
+      <div className="col-span-1 h-full">
+        <div className="bg-subtle/10 flex h-full w-full flex-col items-center">
+          <span className="mt-1 mb-10 flex h-8 w-[90%] items-center pl-2">
+            <img
+              src="./image.webp"
+              className="h-8 w-9 rounded-md"
+              alt=" Mailrise-logo"
+            />
+            <span className="font-inter text-[14px] font-medium tracking-tighter">
+              Mailrise
+            </span>
+            <IoIosSearch className="text-subtle ml-4" />
+          </span>
+
+          {NAV_ITEMS.map((item) => {
+            const Icon = item.icon;
+            return (
+              <span
+                onClick={() => {
+                  if (item.id === "workspace" || item.id === "inbox") {
+                    setactivetab(item.id);
+                  }
+                }}
+                key={item.id}
+                className={cn(
+                  "font-geist hover:bg-subtle/10 mt-2 flex h-8 w-[90%] cursor-pointer items-center gap-x-1 pl-4 text-[14px] font-light hover:rounded-xl",
+                  item.id === activetab && `bg-subtle/10 rounded-xl`
+                )}
+              >
+                <Icon className="mb-1 size-4" />
+                <span className="border-subtle/10 ml-2 border-b">
+                  {item.label}
+                </span>
+              </span>
+            );
+          })}
+
+          <div className="bg-panel/70 relative mt-55 flex h-20 w-[88%] flex-col items-center rounded-md">
+            <img
+              src="./profile-img.jpg"
+              className="absolute size-12 -translate-y-5 rounded-full shadow-[0px_0px_1px_1px_var(--accent-hover)] transition-all duration-200 hover:scale-95"
+            />
+            <span className="text-focus pt-9 text-sm">Andrew Lee</span>
+            <span className="text-subtle text-[10px]">andrew@stripe.com</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-card relative col-span-5 h-full w-full">
+        {activetab === "inbox" ? (
+          <Workspace className="" isFront={false} />
+        ) : (
+          <Inbox
+            className={cn("bg-card/10 h-full w-full", className)}
+            isFront={false}
+          />
+        )}
+
+        <div className="border-hover border-0.5px bg-card absolute -right-15 -bottom-18 col-span-5 h-full w-[95%] rounded-2xl border shadow-[inset_0px_0px_1px_1px_var(--accent-border)]">
+          {activetab === "inbox" ? (
+            <Inbox
+              className={cn(
+                "bg-card/10 h-full w-full to-80% mask-b-from-70%",
+                className
+              )}
+              isFront={true}
+            />
+          ) : (
+            <Workspace className="to-80% mask-b-from-70%" isFront={true} />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
