@@ -1,26 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Sun } from "lucide-react";
 import { RxMoon } from "react-icons/rx";
 
-export const Theme = ({
-  className,
-}: {
-  className?: string;
-}): React.JSX.Element => {
+export const Theme = (): React.JSX.Element => {
   const [dark, setdark] = useState<boolean>(
     localStorage.getItem("mailrise-theme") !== "light"
   );
 
   const toggleTheme = () => {
+    // disabling transitions.
+    document.documentElement.classList.add("disable-transitions");
     const theme = !dark;
     setdark(theme);
 
     document.documentElement.classList.toggle("dark", theme);
     localStorage.setItem("mailrise-theme", theme ? "dark" : "light");
+
+    setTimeout(() => {
+      document.documentElement.classList.remove("disable-transitions");
+    }, 0);
   };
 
   return (
-    <div className="">
+    <div className="cursor-pointer">
       <button
         onClick={toggleTheme}
         className="border-default bg-card/60 group hover:border-themeborder relative flex cursor-pointer items-center justify-center rounded-md border p-4 transition-all duration-200 outline-none"
