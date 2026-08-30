@@ -28,9 +28,9 @@ export const Workspace = ({
       >
         <div className="border-dashboard/10 relative col-span-3 h-full rounded-tl-xl rounded-bl-xl border">
           <EmailEditor className="" />
-         
+          <Textarea className="" />
         </div>
-       
+      
       </motion.div>
     </AnimatePresence>
   );
@@ -99,6 +99,50 @@ const EmailEditor = ({ className }: { className?: string }) => {
             className="mr-2 flex items-end justify-end"
             label="Send"
           />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Textarea = ({ className }: { className?: string }) => {
+  const [promptvalue, setpromptValue] = useState<string>(
+    "Can you please refine this email draft and highlight the main and agenda for tomorrow's meeting?"
+  );
+
+  return (
+    <div
+      className={cn(
+        "bg-hover/40 absolute bottom-2 left-1 flex h-full max-h-34 w-[99%] flex-col items-center justify-center rounded-bl-md",
+        className
+      )}
+    >
+      <textarea
+        name="promptarea"
+        value={promptvalue}
+        rows={2}
+        onChange={(e) => setpromptValue(e.target.value)}
+        placeholder="Describe your email prompt..."
+        className="text-glow h-full w-full resize-none overflow-hidden px-4 py-4 text-[14.5px] outline-none"
+      >
+        <span className="animate-pulse">|</span>
+      </textarea>
+      <div className="relative mb-2 flex h-20 w-[18%] translate-x-4/2 cursor-pointer items-end justify-end overflow-hidden rounded-md p-[1px] shadow-sm">
+        <motion.div
+          animate={{ rotate: [0, 360] }}
+          transition={{
+            repeat: Infinity,
+            duration: 3,
+            ease: "easeIn",
+            repeatType: "reverse",
+          }}
+          className="absolute -inset-[200%] top-1 rounded-md bg-[conic-gradient(from_0deg,transparent_0_300deg,var(--border-focus)_360deg)] opacity-90"
+        />
+
+        <div className="bg-card relative z-10 flex h-full w-full items-end justify-end gap-x-2 rounded-sm px-5 pt-[33px]">
+          <SendHorizontal size={22} className="text-focus mb-2" />
+          <span className="text-subtle/40 mb-1.5 w-[1px]">|</span>
+          <ChevronDown size={22} className="text-focus mb-2" />
         </div>
       </div>
     </div>
