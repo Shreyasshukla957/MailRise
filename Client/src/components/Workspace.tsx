@@ -151,4 +151,43 @@ const Textarea = ({ className }: { className?: string }) => {
   );
 };
 
+const RightCell = ({ className }: { className?: string }) => {
+  const date = new Date();
+  const time1 = date.toLocaleTimeString();
+  const date1 = date.toLocaleDateString();
+  const day = date.toLocaleDateString("en-Us", {
+    weekday: "long",
+  });
 
+  const [Time, setTime] = useState<string>("");
+
+  function counttime() {
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setTime(time1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }, [Time]);
+  }
+
+  counttime();
+
+  return (
+    <div className={cn("relative mx-0.5 my-1", className)}>
+      <div className="flex h-30 flex-col items-end justify-start">
+        <span className="text-body mt-3 mr-2 mb-2 flex h-10 items-center justify-end text-2xl">
+          {date1}
+        </span>
+        <span className="text-md text-subtle mr-3 mb-2 flex h-8 items-center justify-end">
+          {time1}
+        </span>
+        <span className="text-md text-subtle mr-3 mb-2 flex h-8 items-center justify-end">
+          {day}
+        </span>
+      </div>
+
+      <Minicell className="border-px bg-card border-dashboard/20 relative -bottom-1 left-6 h-99 w-60 rounded-md border" />
+    </div>
+  );
+};
