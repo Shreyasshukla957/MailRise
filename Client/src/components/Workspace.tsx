@@ -30,7 +30,9 @@ export const Workspace = ({
           <EmailEditor className="" />
           <Textarea className="" />
         </div>
-      
+        <div className="col-span-1 h-full">
+          <RightCell className="bg-hover/40 h-[98%] w-[96%] rounded-tr-xl rounded-br-xl" />
+        </div>
       </motion.div>
     </AnimatePresence>
   );
