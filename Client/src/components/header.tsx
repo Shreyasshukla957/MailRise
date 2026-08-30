@@ -12,23 +12,23 @@ export const Header = ({
   return (
     <div
       className={cn(
-        "mt-5 flex w-full flex-col items-center justify-center selection:text-screen selection:bg-mdark",
+        "selection:text-screen selection:bg-mdark mt-5 flex w-full flex-col items-center justify-center",
         className
       )}
     >
-      <div className="shadow-border/50 relative h-9 w-64 overflow-hidden rounded-3xl">
-        <Conicalgrad dura={7} />
-        <Conicalgrad dura={5} />
+      <div className="border border-subtle/40 relative h-9 w-64 overflow-hidden rounded-3xl">
+        {/* <Conicalgrad dura={7} /> */}
+        {/* <Conicalgrad dura={5} /> */}
 
-        <button className="from-tp to-tp font-geist text-cta group absolute inset-0 z-10 mx-px my-px flex cursor-pointer items-center justify-around rounded-3xl bg-linear-to-r px-4 text-[12px] tracking-tight">
+        <button className="from-cta/25 via-screen to-cta/10 font-geist group absolute inset-0 z-10 mx-px my-px flex cursor-pointer items-center justify-around rounded-3xl bg-linear-to-t px-4 text-[12px] tracking-tight">
           {" "}
           <Send size={10} className="text-primary" />
-          <span className="flex items-center justify-center text-shadow-sm">
+          <span className="flex items-center justify-center text-shadow-xs">
             {" "}
             Mailrise
           </span>
           <span>|</span>
-          <span className="mr-4 flex items-center justify-start tracking-normal text-shadow-sm">
+          <span className="mr-4 flex items-center justify-start tracking-normal text-shadow-xs">
             YOUR Workspace
           </span>
           <ArrowRight
