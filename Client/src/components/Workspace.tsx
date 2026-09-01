@@ -322,4 +322,22 @@ const Working = ({ className }: { className?: string }) => {
   );
 };
 
+export const MicroChecklist = ({ className }: { className?: string }) => {
+  const STEPS = ["Recipient verified", "Subject added", "Email body complete"];
 
+  return (
+    <div
+      className={cn(
+        "font-geist flex flex-col gap-y-1 text-[11px] select-none",
+        className
+      )}
+    >
+      {STEPS.map((step) => (
+        <div key={step} className="flex items-center gap-x-2">
+          <span className="text-[9px] text-emerald-500">●</span>
+          <span className="text-headline/90 font-medium">{step}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
