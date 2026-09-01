@@ -220,4 +220,40 @@ const Minicell = ({ className }: { className?: string }) => {
   );
 };
 
+const Schedule = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn(
+        "justisfy-start flex flex-col items-start gap-y-3",
+        className
+      )}
+    >
+      <div className="font-geist flex w-full flex-col gap-y-3 p-3.5 select-none">
+        <div className="border-default/30 flex h-6 items-center justify-between border-b">
+          <span className="text-subtle border-b text-xs font-semibold tracking-wider uppercase">
+            Schedule
+          </span>
+        </div>
+
+        <span className="text-glow font-hanken flex w-full items-end justify-end pr-0.5 text-[15px]">
+          Today
+        </span>
+
+        <ScheduleCard />
+        <ScheduleCard
+          name="Hazel Keech"
+          email="keechhazel@stripe.com"
+          role="Intern"
+          date="Today"
+          avatar="./hazel.jpg"
+        />
+      </div>
+
+      <div className="flex w-full flex-col items-center justify-center">
+        <Working className="bg-card/60 h-40 w-full" />
+      </div>
+    </div>
+  );
+};
+
 
