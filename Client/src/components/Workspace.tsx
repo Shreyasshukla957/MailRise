@@ -191,3 +191,33 @@ const RightCell = ({ className }: { className?: string }) => {
     </div>
   );
 };
+
+const Minicell = ({ className }: { className?: string }) => {
+  return (
+    <div className={cn("overflow-hidden", className)}>
+      <motion.div
+        animate={{ rotate: [0, 360] }}
+        transition={{
+          repeat: Infinity,
+          duration: 3,
+          ease: "easeIn",
+          repeatType: "reverse",
+        }}
+        className="absolute -inset-[20%] top-1 z-1 rounded-md bg-[conic-gradient(from_0deg,transparent_0_300deg,var(--border-focus)_360deg)] opacity-90"
+      />
+      <motion.div
+        animate={{ rotate: [0, 360] }}
+        transition={{
+          repeat: Infinity,
+          duration: 3,
+          ease: "easeIn",
+          repeatType: "reverse",
+        }}
+        className="absolute -inset-[20%] top-1 z-1 rounded-md bg-[conic-gradient(from_0deg,transparent_0_300deg,var(--border-focus)_360deg)] opacity-90"
+      />
+      <Schedule className="bg-hover absolute inset-0 z-10 m-auto h-[99.5%] w-[99.5%] rounded-md" />
+    </div>
+  );
+};
+
+
