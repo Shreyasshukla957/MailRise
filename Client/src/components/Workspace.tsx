@@ -256,4 +256,45 @@ const Schedule = ({ className }: { className?: string }) => {
   );
 };
 
+const ScheduleCard = ({
+  className,
+  name = "Vivek Nagarkoti",
+  email = "nagarkotivivek.vks@gmail.com",
+  role = "",
+  avatar = "./vivek.jpg",
+}: {
+  className?: string;
+  name?: string;
+  email?: string;
+  role?: string;
+  date?: string;
+  avatar?: string;
+}) => {
+  return (
+    <div className={cn("font-hanken", className)}>
+      <div className="flex items-start justify-start gap-x-3">
+        <img
+          src={avatar}
+          alt={name}
+          className="border-default/40 size-9 rounded-md border object-cover shadow-2xs"
+        />
+        <div className="flex w-full flex-col pr-2">
+          <span className="text-headline/90 text-sm font-semibold tracking-tight text-shadow-2xs">
+            {name}
+          </span>
+          <span className="font-geistmono text-subtle/60 w-full text-[8px]">
+            {email}
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-2 flex h-2 w-full items-center justify-end">
+        <span className="text-headline/70 font-geistmono border-b text-[10px]">
+          {role}
+        </span>
+      </div>
+    </div>
+  );
+};
+
 
