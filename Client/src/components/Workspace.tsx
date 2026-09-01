@@ -297,4 +297,29 @@ const ScheduleCard = ({
   );
 };
 
+const Working = ({ className }: { className?: string }) => {
+  return (
+    <div className={cn("w-full", className)}>
+      <div className="text-subtle border-default/70 mb-2 flex w-full items-center justify-between gap-x-1 px-3 py-1.5 text-xs font-semibold uppercase">
+        <span className="text-md font-geist border-b tracking-wide">
+          Working
+        </span>
+      </div>
+
+      <ScheduleCard
+        className="px-4"
+        name="Sarah Hyland"
+        email="sarah@stripe.com"
+        role=""
+        date="Today"
+        avatar="./Sarah.jpg"
+      />
+
+      <div className="flex items-center justify-between">
+        <MicroChecklist className="px-3" />
+      </div>
+    </div>
+  );
+};
+
 
