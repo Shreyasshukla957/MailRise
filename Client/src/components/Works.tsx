@@ -55,6 +55,62 @@ export const Works = ({ className }: { className?: string }) => {
         className
       )}
     >
+      <div className="relative z-20 flex h-45 w-full items-center justify-start rounded-xl px-8 pt-7">
+        <div className="border-subtle/30 bg-panel shadow-all/80 relative z-20 flex h-27 w-46.5 justify-center rounded-xl border">
+          <img
+            src="./image.png"
+            alt=""
+            className="absolute inset-0 h-full w-full rounded-xl object-cover"
+          />
+
+          <div className="absolute inset-0 z-5 rounded-xl bg-linear-to-b from-white/60 via-transparent to-white/60" />
+
+          <div className="relative z-10 flex w-full flex-col items-center pt-4 pl-9">
+            <span className="font-hanken text-md font-semibold tracking-tight whitespace-nowrap text-neutral-500 transition-colors duration-200 hover:text-orange-500">
+              Enter Mailrise
+            </span>
+            <span className="font-lora text-xs font-medium whitespace-nowrap text-neutral-500">
+              with Oauth2 & Jwt
+            </span>
+          </div>
+
+          <span className="relative top-18 right-18 z-10 h-11 w-16 overflow-hidden rounded-md shadow-xl">
+            <span className="bg-themeborder absolute inset-px z-10 flex items-center justify-center rounded-md border border-white/10 shadow-xl">
+              <MdSecurity className="mt-1 mr-2 size-8 translate-x-1/9 text-white" />
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <Svgworks {...LINE_PRESETS.medium} />
+
+      <div className="relative z-20 mt-10 flex h-45 w-full items-center justify-start rounded-xl px-8 pt-23">
+        <div className="border-subtle/30 bg-panel shadow-all/80 relative z-20 flex h-27 w-46.5 justify-center rounded-xl border">
+          <img
+            src="./image.png"
+            alt=""
+            className="absolute inset-0 h-full w-full rounded-xl object-cover"
+          />
+
+          <div className="absolute inset-0 z-5 rounded-xl bg-linear-to-b from-white/60 via-transparent to-white/60" />
+
+          <div className="relative z-10 flex w-full flex-col items-center pt-12 pl-9">
+            <span className="font-hanken text-md cursor-pointer font-semibold tracking-tight whitespace-nowrap text-neutral-500 hover:text-orange-500">
+              Start Prompting
+            </span>
+            <span className="font-lora text-xs font-medium whitespace-nowrap text-neutral-500">
+              with Feature Suite
+            </span>
+          </div>
+
+          <span className="relative -top-2 right-18.5 z-10 h-11 w-16 overflow-hidden rounded-md shadow-xl">
+            <span className="bg-fontscolor absolute inset-px z-10 flex items-center justify-center rounded-md border border-white/10 shadow-xl">
+              <BsPersonWorkspace className="mt-1 mr-2 size-8 translate-x-1/9 text-white" />
+            </span>
+          </span>
+        </div>
+      </div>
+
       
     </div>
   );
