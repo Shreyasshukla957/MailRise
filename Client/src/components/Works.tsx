@@ -51,7 +51,7 @@ export const Works = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        " bg-screen/80 relative flex h-200 w-[96%] flex-col items-center   bg-[radial-gradient(var(--accent-border)_1px,transparent_1px)] bg-size-[14px_14px] px-15 pt-10 ",
+        "bg-screen/80 relative flex h-200 w-[96%] flex-col items-center bg-[radial-gradient(var(--accent-border)_1px,transparent_1px)] bg-size-[14px_14px] px-15 pt-10",
         className
       )}
     >
@@ -114,8 +114,82 @@ export const Works = ({ className }: { className?: string }) => {
       <Svgworks {...LINE_PRESETS.fast} />
       <Svgborder {...LINE_PRESETS.cross} />
 
-     
+      <MailCard className="pointer-events-none translate-x-4 translate-y-8/5 bg-neutral-200">
+        <div className="absolute inset-x-2 bottom-12">
+          <PromptBox />
+        </div>
 
+        <div className="absolute inset-x-0 -bottom-14 z-10">
+          <MailCardText
+            data="Context that gets it right"
+            subdata="Just describe what you need — get a well-structured email with the right tone, detail, and intent, every time."
+          />
+        </div>
+      </MailCard>
+
+      <Svgborder {...LINE_PRESETS.cross2} />
+
+      <MailCard className="pointer-events-none translate-x-4 translate-y-1/5 bg-neutral-200">
+        <div className="absolute inset-x-2 bottom-12">
+          <MailButton className="hover:border-px hover:border-focus transition-colors duration-200" />
+        </div>
+
+        <div className="absolute inset-x-0 -bottom-14 z-10">
+          <MailCardText
+            data="Edit until it's perfect"
+            subdata="Tweak tone, structure, or content anytime — full editing control before you hit send."
+          />
+        </div>
+      </MailCard>
+
+     
+    </div>
+  );
+};
+
+const MailCard = ({
+  className,
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) => {
+  return (
+    <div
+      className={cn(
+        "border-subtle/30 bg-mailcard shadow-all/30 absolute z-10 h-65 w-50 rounded-md border",
+        className
+      )}
+    >
+      <div className="relative grid h-full w-full grid-rows-5 items-center justify-center rounded-md">
+        <div className="absolute inset-x-0 top-0 aspect-square">
+          <img
+            src="./image.png"
+            alt=""
+            className="absolute h-full w-full rounded-tl-md rounded-tr-md mask-b-from-30% mask-b-to-90% object-cover"
+          />
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const MailCardText = ({
+  className,
+  subdata,
+  data,
+}: {
+  className?: string;
+  subdata: string;
+  data: string;
+}) => {
+  return (
+    <div className={cn("w-full px-3 py-2", className)}>
+      <h3 className="text-xs font-medium text-neutral-700">{data}</h3>
+      <p className="mt-1 text-[10px] leading-relaxed text-neutral-600">
+        {subdata}
+      </p>
     </div>
   );
 };
