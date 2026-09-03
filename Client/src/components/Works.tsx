@@ -111,7 +111,11 @@ export const Works = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      
+      <Svgworks {...LINE_PRESETS.fast} />
+      <Svgborder {...LINE_PRESETS.cross} />
+
+     
+
     </div>
   );
 };
