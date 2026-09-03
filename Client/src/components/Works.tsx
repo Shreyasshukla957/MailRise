@@ -148,8 +148,28 @@ export const Works = ({ className }: { className?: string }) => {
 
       <SvgLine1 {...LINE_PRESETS.end} />
 
-     
+      <SendCard className="top-70 right-10 bg-neutral-200">
+        <div className="absolute inset-x-2 top-8">
+          <SendBox />
+        </div>
 
+        <div className="absolute top-30 right-8 flex justify-end">
+          <button className="flex items-center gap-1 rounded-full bg-orange-500 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors duration-200">
+            Send
+            <FaArrowUp className="rotate-45" size={10} />
+          </button>
+        </div>
+
+        <div className="absolute inset-x-0 -bottom-5 z-10">
+          <MailCardText
+            data="Done. Just send it."
+            subdata="One click and it's out — refined right inside your mono 
+   workspace, no overhead, no extra steps."
+          />
+        </div>
+
+      </SendCard>
+      
     </div>
   );
 };
