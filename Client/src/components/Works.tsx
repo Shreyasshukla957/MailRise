@@ -142,7 +142,14 @@ export const Works = ({ className }: { className?: string }) => {
         </div>
       </MailCard>
 
+      <Svglast1 />
+
+      <Svglast2 />
+
+      <SvgLine1 {...LINE_PRESETS.end} />
+
      
+
     </div>
   );
 };
@@ -194,4 +201,88 @@ const MailCardText = ({
   );
 };
 
+const PromptBox = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn(
+        "border-subtle/30 flex items-center gap-1.5 rounded-md border bg-neutral-100 px-2 py-2.5",
+        className
+      )}
+    >
+      <span className="text-subtle flex-1 text-xs">
+        Write a professional email for tomorrow's meeting
+      </span>
 
+      <button className="bg-theme flex h-5 w-5 items-center justify-center rounded-full">
+        <FaArrowUp size={10} className="text-neutral-100" />
+      </button>
+    </div>
+  );
+};
+
+const MailButton = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn(
+        "border-subtle/30 flex items-center gap-1.5 rounded-md border bg-neutral-100 px-2 py-2.5",
+        className
+      )}
+    >
+      <span className="text-subtle flex-1 text-xs font-medium">
+        Edit this email
+      </span>
+
+      <button className="bg-theme flex h-5 w-5 items-center justify-center rounded-full transition-colors duration-200">
+        <MdEdit size={10} className="text-neutral-100" />
+      </button>
+    </div>
+  );
+};
+
+const SendBox = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn(
+        "border-subtle/30 flex flex-col gap-2 rounded-md border bg-neutral-100 px-2 py-2.5",
+        className
+      )}
+    >
+      <div className="flex flex-col">
+        <span className="text-xs font-medium text-neutral-700">
+          Tomorrow's meeting
+        </span>
+        <span className="text-subtle text-[10px]">
+          Hi team, sharing the agenda for tomorrow's sync...
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const SendCard = ({
+  className,
+  children,
+}: {
+  className?: string;
+  children?: React.ReactNode;
+}) => {
+  return (
+    <div
+      className={cn(
+        "border-subtle/30 bg-mailcard shadow-all/30 absolute z-10 h-65 w-60 rounded-md border",
+        className
+      )}
+    >
+      <div className="relative grid h-full w-full grid-rows-4 items-center justify-center rounded-md">
+        <div className="absolute inset-x-0 top-0 aspect-square">
+          <img
+            src="./image.png"
+            alt=""
+            className="absolute aspect-auto h-full w-full rounded-tl-md rounded-tr-md mask-b-from-30% mask-b-to-90% object-cover"
+          />
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+};
