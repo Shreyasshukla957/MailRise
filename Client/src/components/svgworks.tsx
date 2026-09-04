@@ -209,4 +209,24 @@ export const Svglast2 = ({
   );
 };
 
-
+export const UNDERSTAND = ({ className }: { className?: string }) => {
+  return (
+    <div className={cn("", className)}>
+      <svg
+      strokeWidth="0.5"
+      strokeDasharray="8 8"
+        width="113"
+        height="154"
+        viewBox="0 0 113 154"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        stroke="var(--color-subtle)"
+      >
+        <path
+          d="M80.6068 0.491577C80.6068 0.491577 0.499987 15.1404 0.5 57.5843C0.500013 99.5327 111.5 146.604 111.5 146.604M89 152.992L111.5 146.604L101.5 121.492"
+          
+        />
+      </svg>
+    </div>
+  );
+};
