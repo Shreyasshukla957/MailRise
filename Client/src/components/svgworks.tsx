@@ -68,4 +68,51 @@ export const SvgLine1 = ({
   );
 };
 
+export const Svgborder = ({
+  className,
+  delay = 0,
+  dura = 2,
+  repeatdelay = 0,
+}: Alldatatype) => {
+  return (
+    <div className={cn(" ", className)}>
+      <svg
+        width="311"
+        height="101"
+        viewBox="0 0 311 101"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0.5 100.5V16.5A16 16 0 0 1 16.5 0.5H310.5"
+          stroke="var(--color-subtle)"
+          strokeWidth="0.3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+
+        <motion.path
+          d="M0.5 65.5V16.5A16 16 0 0 1 16.5 0.5H276.5"
+          strokeWidth="0.3"
+          stroke="var(--color-blue)"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          pathLength={1}
+          strokeDasharray="0.15 0.85"
+          initial={{ strokeDashoffset: 0 }}
+          animate={{ strokeDashoffset: -1 }}
+          transition={{
+            repeat: Infinity,
+            duration: dura,
+            ease: "linear",
+            delay,
+            repeatDelay: repeatdelay,
+            repeatType: "loop",
+          }}
+        />
+      </svg>
+    </div>
+  );
+};
+
 
