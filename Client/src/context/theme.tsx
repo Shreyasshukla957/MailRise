@@ -8,17 +8,11 @@ export const Theme = (): React.JSX.Element => {
   );
 
   const toggleTheme = () => {
-    // disabling transitions.
-    document.documentElement.classList.add("disable-transitions");
     const theme = !dark;
     setdark(theme);
 
     document.documentElement.classList.toggle("dark", theme);
     localStorage.setItem("mailrise-theme", theme ? "dark" : "light");
-
-    setTimeout(() => {
-      document.documentElement.classList.remove("disable-transitions");
-    }, 0);
   };
 
   return (
