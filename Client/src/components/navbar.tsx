@@ -14,12 +14,12 @@ export const Navbar = ({
       href: "#features",
     },
     {
-      name: "How it works",
-      href: "#Works",
+      name: "FAQ",
+      href: "#FAQ",
     },
     {
-      name: "Use cases",
-      href: "#Cases",
+      name: "How it works",
+      href: "#Works",
     },
   ];
 
@@ -29,11 +29,10 @@ export const Navbar = ({
         "sticky top-0 z-50 h-15 w-full",
         "flex items-center justify-between px-6 py-2",
         "font-manrope bg-screen/80 backdrop-blur-md",
-        "border-default border-b",
+        "border-subtle/20 border-b",
         className
       )}
     >
-      {/* logo */}
       <div className="flex items-center">
         <img src="./image.webp" className="h-9 w-auto pb-1" />
         <span className="hover:text-focus font-geistmono cursor-pointer font-semibold tracking-tighter transition-all duration-200">
@@ -42,7 +41,6 @@ export const Navbar = ({
       </div>
 
       <div className="flex items-center justify-around gap-x-5">
-        {/* nav links */}
         <div className="hidden cursor-pointer items-center justify-center gap-x-4 text-[16px] lg:flex">
           {navlinks.map((items) => {
             return (
@@ -59,17 +57,19 @@ export const Navbar = ({
           })}
         </div>
 
-        <Theme className="cursor-pointer" />
+        <Theme />
 
         <div className="flex items-center justify-center gap-4">
           <button className="text-focus border-focus flex cursor-pointer rounded-xl border px-3 py-2 text-[14px] font-semibold shadow-sm text-shadow-sm">
             Sign In
           </button>
 
+
           <GetStarted
             className="border-focus/30 bg-focus/5 hover:border-focus group flex cursor-pointer rounded-md border p-[1.5px] transition-all duration-200 hover:shadow-[inset_0_0_2px_0.5px_var(--accent-bright)]"
             label="Get Started"
           />
+          
         </div>
       </div>
     </div>
