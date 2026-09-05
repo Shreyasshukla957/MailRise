@@ -30,7 +30,8 @@ export const Feature = ({
         <InboxActivityCard className="pointer-events-none col-span-6 col-start-4 h-110 rounded-br-3xl rounded-bl-3xl border-t-0" />
         <SchedulingCard className="col-span-3" />
         <DashboardShowcase className="border-subtle/25 border border-l-0" />
-        
+        <ImageFeatureCard className="col-span-4 -ml-3" />
+      
       </div>
     </div>
   );
@@ -156,6 +157,32 @@ export const InboxActivityCard = ({ className }: { className?: string }) => {
 };
 
 
+
+export const ImageFeatureCard = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn(
+        "border-subtle/15 bg-panel/40 flex h-60 w-full flex-col overflow-hidden rounded-2xl border shadow-sm backdrop-blur-sm",
+        className
+      )}
+    >
+      <div className="border-subtle/10 bg-screen/40 flex h-43 w-full items-end justify-end overflow-hidden border-b bg-[radial-gradient(circle_at_left,var(--color-blue)_30%,var(--color-purple)_60%,transparent_100%)]">
+        <img src="./text.png" alt="" className="w-[90%] rounded-md" />
+      </div>
+
+      <div className="flex flex-1 flex-col justify-center gap-1 px-4 py-3">
+        <h4 className="font-hanken text-headline text-md font-semibold tracking-tight">
+          Turn a simple prompt into a structured email.
+        </h4>
+        <p className="font-hanken text-mdark/60 text-xs leading-relaxed font-light">
+          Describe the purpose of your message in plain language, and MailRise
+          generates the subject, body, and closing—ready for you to review and
+          edit.
+        </p>
+      </div>
+    </div>
+  );
+};
 
 
 
