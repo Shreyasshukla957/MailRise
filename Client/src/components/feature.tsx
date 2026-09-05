@@ -32,7 +32,7 @@ export const Feature = ({
         <DashboardShowcase className="border-subtle/25 border border-l-0" />
         <ImageFeatureCard className="col-span-4 -ml-3" />
         <ToneEditCard className="bg-hover/10 text-headline col-span-4 col-start-9 -mt-80 flex items-center justify-center" />
-        
+        <ChatStatusCard className="col-start-9 -mt-30" />
       </div>
     </div>
   );
@@ -303,7 +303,34 @@ export const SchedulingCard = ({ className }: { className?: string }) => {
   );
 };
 
+export const ChatStatusCard = ({ className }: { className?: string }) => {
+  return (
+    <motion.div
+      initial="rest"
+      whileHover="hover"
+      className={cn(
+        "group border-subtle/20 bg-panel/30 relative col-span-4 -ml-3 flex h-12 w-full items-center gap-3 rounded-md border px-4 shadow-sm backdrop-blur-xl",
+        className
+      )}
+    >
+      <motion.span
+        variants={{
+          rest: { backgroundColor: "rgb(163 163 163 / 0.5)" },
+          hover: { backgroundColor: "rgb(16 185 129 / 1)" },
+        }}
+        transition={{ duration: 0.3 }}
+        className="h-2 w-2 shrink-0 rounded-full"
+      />
 
+      <span className="font-hanken text-mdark/50 flex-1 truncate text-sm font-light">
+        Type your message...
+      </span>
+      <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-linear-to-bl from-blue-500 to-neutral-200 shadow-sm">
+        <Send size={14} className="text-white" />
+      </div>
+    </motion.div>
+  );
+};
 
 export const DashboardShowcase = ({ className }: { className?: string }) => {
   return (
