@@ -31,7 +31,8 @@ export const Feature = ({
         <SchedulingCard className="col-span-3" />
         <DashboardShowcase className="border-subtle/25 border border-l-0" />
         <ImageFeatureCard className="col-span-4 -ml-3" />
-      
+        <ToneEditCard className="bg-hover/10 text-headline col-span-4 col-start-9 -mt-80 flex items-center justify-center" />
+        
       </div>
     </div>
   );
@@ -156,7 +157,38 @@ export const InboxActivityCard = ({ className }: { className?: string }) => {
   );
 };
 
+export const ToneEditCard = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn(
+        "border-subtle/15 bg-panel/40 -ml-3 flex h-50 w-full flex-col rounded-xl border p-6 shadow-sm backdrop-blur-sm",
+        className
+      )}
+    >
+      <div className="flex h-35 flex-col justify-center gap-2">
+        <h3 className="font-instrument text-headline text-2xl leading-snug font-medium tracking-wide">
+          Tone and edit control, built into every draft.
+        </h3>
+        <p className="font-instrument text-mdark/60 text-sm leading-relaxed font-light tracking-wide">
+          Rewrite the wording or switch between Professional, Formal, and Casual
+          to make each message fit its purpose.
+        </p>
+      </div>
 
+      <div className="mt-3 flex h-10 w-full items-center justify-between">
+        <div className="border-subtle/30 bg-screen/60 text-headline font-hanken flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium">
+          Professional
+          <ChevronDown size={14} className="text-mdark/50" />
+        </div>
+
+        <div className="border-subtle/40 bg-focus text-panel font-hanken flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium shadow-sm">
+          <Pencil size={13} className="text-panel" />
+          Edit
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const ImageFeatureCard = ({ className }: { className?: string }) => {
   return (
