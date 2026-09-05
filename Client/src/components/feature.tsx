@@ -28,6 +28,7 @@ export const Feature = ({
           <Logincard className="flex h-full w-full items-start justify-center overflow-hidden" />
         </div>
         <InboxActivityCard className="pointer-events-none col-span-6 col-start-4 h-110 rounded-br-3xl rounded-bl-3xl border-t-0" />
+        <SchedulingCard className="col-span-3" />
    
       </div>
     </div>
@@ -149,6 +150,95 @@ export const InboxActivityCard = ({ className }: { className?: string }) => {
       </div>
 
       <Inbox isFront className="h-full justify-center to-90% mask-b-from-70%" />
+    </div>
+  );
+};
+
+
+
+
+
+export const SchedulingCard = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn(
+        "border-subtle/15 bg-panel/40 flex h-100 w-full flex-col gap-5 rounded-bl-2xl border-r-0 border-b border-l to-90% mask-r-from-60% p-5 shadow-sm backdrop-blur-sm",
+        className
+      )}
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1.5">
+          <Calendar size={13} className="text-mdark/50" />
+          <span className="font-hanken text-mdark/50 text-xs font-semibold tracking-wide uppercase">
+            Schedule
+          </span>
+        </div>
+        <span className="font-hanken text-mdark/40 text-xs">Today</span>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center gap-3">
+          <img
+            src="https://i.pravatar.cc/40?img=12"
+            alt=""
+            className="h-9 w-9 rounded-full object-cover"
+          />
+          <div className="flex flex-col">
+            <span className="font-hanken text-headline text-sm font-semibold">
+              James Lenin
+            </span>
+            <span className="font-hanken text-mdark/40 text-xs">9:30 AM</span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <img
+            src="https://i.pravatar.cc/40?img=32"
+            alt=""
+            className="h-9 w-9 rounded-full object-cover"
+          />
+          <div className="flex flex-col">
+            <span className="font-hanken text-headline text-sm font-semibold">
+              Margarette Smith
+            </span>
+            <span className="font-hanken text-mdark/40 text-xs">11:00 AM</span>
+          </div>
+          <span className="border-subtle/30 text-mdark/50 font-hanken ml-auto rounded-md border px-2 py-0.5 text-[10px] font-medium">
+            Follow-up
+          </span>
+        </div>
+      </div>
+
+      <div className="border-subtle/15 border-t" />
+
+      <div className="flex flex-col gap-1.5">
+        <span className="font-hanken text-mdark/50 text-xs font-semibold tracking-wide uppercase">
+          Upcoming
+        </span>
+
+        <div className="flex items-center gap-3">
+          <img
+            src="https://i.pravatar.cc/40?img=45"
+            alt=""
+            className="h-9 w-9 rounded-full object-cover"
+          />
+          <div className="flex flex-col">
+            <span className="font-hanken text-headline text-sm font-semibold">
+              Anastasia Slovic
+            </span>
+            <span className="font-hanken text-mdark/40 text-xs">
+              Tomorrow, 2:00 PM
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="border-subtle/15 border-t" />
+      <p className="font-hanken text-mdark/70 text-[12px] leading-relaxed font-light">
+        Plan each email in advance by selecting its recipient, delivery date,
+        and preferred time. MailRise keeps scheduled messages organized in your
+        workspace, giving you a clear view of what is planned, pending, and
+        ready for delivery.
+      </p>
     </div>
   );
 };
