@@ -29,7 +29,8 @@ export const Feature = ({
         </div>
         <InboxActivityCard className="pointer-events-none col-span-6 col-start-4 h-110 rounded-br-3xl rounded-bl-3xl border-t-0" />
         <SchedulingCard className="col-span-3" />
-   
+        <DashboardShowcase className="border-subtle/25 border border-l-0" />
+        
       </div>
     </div>
   );
@@ -244,3 +245,35 @@ export const SchedulingCard = ({ className }: { className?: string }) => {
 };
 
 
+
+export const DashboardShowcase = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn(
+        "bg-panel/40 relative top-2 -left-4 min-h-140 overflow-hidden rounded-tr-3xl rounded-br-3xl border-dashed to-90% mask-b-from-75% shadow-xl md:col-span-8",
+        className
+      )}
+    >
+      <div className="absolute top-8 left-8 z-20 md:top-10 md:left-10">
+        <p className="font-lora text-mdark/50 ml-4 text-xs tracking-[0.16em] uppercase">
+          Dashboard & analytics
+        </p>
+
+        <h2 className="font-instrument text-mdark/90 mt-4 ml-4 w-[70%] text-2xl leading-[1.15] font-medium tracking-wider md:text-3xl">
+          A comprehensive dashboard to monitor, analyze, and optimize every
+          email send.
+        </h2>
+      </div>
+
+      <div className="border-subtle/30 absolute -bottom-35.5 left-1/2 z-10 w-[88%] -translate-x-1/2 rounded-t-3xl border bg-[radial-gradient(circle_at_center,var(--color-focus)_45%,var(--color-screen)_100%)] p-5">
+        <div className="overflow-hidden rounded-2xl border border-white/30 shadow-2xl">
+          <img
+            src="/dashboard.png"
+            alt="MailRise dashboard analytics"
+            className="block w-full"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
