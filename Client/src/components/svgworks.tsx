@@ -115,93 +115,72 @@ export const Svgborder = ({
   );
 };
 
-export const Svglast1 = ({
+export const DoubleWire = ({
   className,
-  delay = 0,
-  dura = 2,
-  repeatdelay = 0,
-}: Alldatatype) => {
-  return (
-    <div className={cn("absolute top-99 right-98 rotate-180", className)}>
-      <svg
-        width="311"
-        height="101"
-        viewBox="0 0 311 101"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M0.5 100.5V16.5A16 16 0 0 1 16.5 0.5H310.5"
-          stroke="var(--color-subtle)"
-          strokeWidth="0.3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-
-        <motion.path
-          d="M0.5 65.5V16.5A16 16 0 0 1 16.5 0.5H276.5"
-          strokeWidth="0.3"
-          stroke="var(--color-green)"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          pathLength={1}
-          strokeDasharray="0.15 0.85"
-          initial={{ strokeDashoffset: 0 }}
-          animate={{ strokeDashoffset: 1 }}
-          transition={{
-            repeat: Infinity,
-            duration: dura,
-            ease: "linear",
-            delay,
-            repeatDelay: repeatdelay,
-            repeatType: "loop",
-          }}
-        />
-      </svg>
-    </div>
-  );
-};
-
-export const Svglast2 = ({
-  className,
-  delay = 0,
   dura = 3,
-  repeatdelay = 0,
-}: Alldatatype) => {
+}: {
+  className?: string;
+  dura?: number;
+}) => {
   return (
-    <div className={cn("absolute top-75 left-128.5 rotate-180", className)}>
+    <div className={cn("pointer-events-none", className)}>
       <svg
-        width="311"
-        height="101"
-        viewBox="0 0 311 101"
+        width="340"
+        height="240"
+        viewBox="0 0 340 240"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="overflow-visible"
       >
+        {/* Top Wire Base Track (Context Card) */}
         <path
-          d="M0.5 0.5V84.5A16 16 0 0 0 16.5 100.5H310.5"
+          d="M 0 15 H 100 C 170 15, 170 120, 240 120 H 340"
           stroke="var(--color-subtle)"
-          strokeWidth="0.3"
+          strokeWidth="0.5"
           strokeLinecap="round"
-          strokeLinejoin="round"
         />
 
+        {/* Top Wire Glowing Orange Laser Pulse */}
         <motion.path
-          d="M0.5 35.5V84.5A16 16 0 0 0 16.5 100.5H276.5"
-          strokeWidth="0.3"
+          d="M 0 15 H 100 C 170 15, 170 120, 240 120 H 340"
+          strokeWidth="1.2"
           stroke="var(--color-yellow)"
           strokeLinecap="round"
-          strokeLinejoin="round"
           pathLength={1}
-          strokeDasharray="0.15 0.85"
-          initial={{ strokeDashoffset: 0 }}
-          animate={{ strokeDashoffset: 1 }}
+          strokeDasharray="0.12 0.88"
+          initial={{ strokeDashoffset: 0.12 }}
+          animate={{ strokeDashoffset: -0.88 }}
           transition={{
             repeat: Infinity,
             duration: dura,
             ease: "linear",
-            delay,
-            repeatDelay: repeatdelay,
-            repeatType: "loop",
+            delay: 1.5,
+          }}
+        />
+
+        {/* Bottom Wire Base Track (Edit Card) */}
+        <path
+          d="M 0 209 H 100 C 170 209, 170 120, 240 120 H 340"
+          stroke="var(--color-subtle)"
+          strokeWidth="0.5"
+          strokeLinecap="round"
+        />
+
+        {/* Bottom Wire Glowing Blue Laser Pulse */}
+        <motion.path
+          d="M 0 209 H 100 C 170 209, 170 120, 240 120 H 340"
+          strokeWidth="1.2"
+          stroke="var(--color-yellow)"
+          strokeLinecap="round"
+          pathLength={1}
+          strokeDasharray="0.12 0.88"
+          initial={{ strokeDashoffset: 0.12 }}
+          animate={{ strokeDashoffset: -0.88 }}
+          transition={{
+            repeat: Infinity,
+            duration: dura,
+            ease: "linear",
+            delay: 0,
           }}
         />
       </svg>
@@ -213,8 +192,8 @@ export const UNDERSTAND = ({ className }: { className?: string }) => {
   return (
     <div className={cn("", className)}>
       <svg
-      strokeWidth="0.5"
-      strokeDasharray="8 8"
+        strokeWidth="0.5"
+        strokeDasharray="8 8"
         width="113"
         height="154"
         viewBox="0 0 113 154"
@@ -222,10 +201,7 @@ export const UNDERSTAND = ({ className }: { className?: string }) => {
         xmlns="http://www.w3.org/2000/svg"
         stroke="var(--color-subtle)"
       >
-        <path
-          d="M80.6068 0.491577C80.6068 0.491577 0.499987 15.1404 0.5 57.5843C0.500013 99.5327 111.5 146.604 111.5 146.604M89 152.992L111.5 146.604L101.5 121.492"
-          
-        />
+        <path d="M80.6068 0.491577C80.6068 0.491577 0.499987 15.1404 0.5 57.5843C0.500013 99.5327 111.5 146.604 111.5 146.604M89 152.992L111.5 146.604L101.5 121.492" />
       </svg>
     </div>
   );
