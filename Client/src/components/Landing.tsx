@@ -12,9 +12,10 @@ export const Landing = () => {
     <Container className="relative mx-auto flex h-full w-full max-w-7xl flex-col items-center justify-center">
       <div className="absolute inset-y-0 left-0 z-10 mx-auto w-px bg-[repeating-linear-gradient(to_bottom,var(--accent-border)_0px_8px,transparent_8px_16px)]"></div>
 
-      <Navbar className="font-satoshi max-w-7xl" />
-
-      <Hero className="selection:text-subtle selection:bg-mdark mx-auto mt-12 w-full max-w-7xl sm:mt-20" />
+      <BackgroundColor className="h-full w-full">
+        <Navbar className="font-satoshi max-w-7xl" />
+        <Hero className="selection:text-screen selection:bg-headline mx-auto mt-12 w-full max-w-7xl sm:mt-20" />
+      </BackgroundColor>
 
       <div className="absolute inset-y-0 right-0 z-10 mx-auto w-px bg-[repeating-linear-gradient(to_bottom,var(--accent-border)_0px_8px,transparent_8px_16px)]"></div>
 
@@ -41,7 +42,6 @@ export const Landing = () => {
       </section>
 
       <FAQ />
-
     </Container>
   );
 };
@@ -50,14 +50,14 @@ const SectionHead1 = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "mb-10 flex w-full flex-col items-start px-6 sm:px-10 lg:px-15 selection:text-screen selection:bg-mdark",
+        "selection:text-screen selection:bg-mdark mb-10 flex w-full flex-col items-start px-6 sm:px-10 lg:px-15",
         className
       )}
     >
-      <p className="font-sans text-mdark/60 mb-2 text-xs font-semibold tracking-wide uppercase">
+      <p className="text-mdark/60 mb-2 font-sans text-[13px] font-semibold tracking-wide uppercase">
         The workflow
       </p>
-      <h2 className="font-sans text-headline text-3xl leading-[1.15] font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+      <h2 className="text-headline font-sans text-3xl leading-[1.15] font-semibold tracking-tight sm:text-4xl lg:text-5xl">
         How it works
       </h2>
     </div>
@@ -68,14 +68,14 @@ const SectionHead2 = ({ className }: { className?: string }) => {
   return (
     <div className={cn("px-6 sm:px-10 lg:px-15", className)}>
       <div className="flex max-w-3xl flex-col">
-        <p className="font-sans text-mdark/60 mb-3 text-xs font-semibold tracking-[0.12em] uppercase selection:text-screen selection:bg-mdark">
+        <p className="text-mdark/60 selection:text-screen selection:bg-mdark mb-3 font-sans text-[13px] font-semibold tracking-[0.12em] uppercase">
           One workspace
         </p>
-        <h2 className="font-sans text-headline text-3xl leading-[1.15] font-semibold tracking-tight text-balance sm:text-4xl lg:text-5xl selection:text-white selection:bg-blue-400">
+        <h2 className="text-headline font-sans text-3xl leading-[1.15] font-semibold tracking-tight text-balance selection:bg-blue-400 selection:text-white sm:text-4xl lg:text-5xl">
           A unified workspace that powers your entire email{" "}
           <span className="text-blue-400">workflow.</span>
         </h2>
-        <p className="font-sans text-mdark/65 mt-2 max-w-2xl text-base leading-relaxed sm:text-md selection:text-screen selection:bg-mdark">
+        <p className="text-mdark/65 sm:text-md selection:text-screen selection:bg-mdark mt-2 max-w-2xl font-sans text-base leading-relaxed">
           Explore the features Mailrise brings together in one workspace.
         </p>
       </div>
@@ -92,5 +92,22 @@ const Constraints = ({ className }: { className?: string }) => {
         className
       )}
     ></div>
+  );
+};
+
+const BackgroundColor = ({
+  className,
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) => {
+  return (
+    <div className={cn("relative", className)}>
+      <div className="bg-[linear-gradient(var(--color-focus)_1px,transparent_1px),linear-gradient(to_right,var(--color-focus)_0.5px,transparent_0.5px)] bg-size-[60px_60px] absolute h-full w-full opacity-5">
+        
+      </div>
+      {children}
+    </div>
   );
 };
