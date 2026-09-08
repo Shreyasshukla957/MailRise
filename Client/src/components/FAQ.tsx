@@ -169,4 +169,29 @@ const FaqItem = ({
   );
 };
 
+const Rise = ({
+  delay = 0,
+  className,
+  children,
+}: {
+  delay?: number;
+  className?: string;
+  children?: React.ReactNode;
+}): React.JSX.Element => {
+  const reduce = useReducedMotion();
 
+  return (
+    <motion.div
+      className={cn(className)}
+      initial={reduce ? false : { opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.55,
+        ease: [0.22, 1, 0.36, 1],
+        delay: reduce ? 0 : delay,
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+};
