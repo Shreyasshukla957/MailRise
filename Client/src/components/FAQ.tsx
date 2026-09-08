@@ -87,4 +87,86 @@ export const FAQ = ({
   );
 };
 
+const FaqItem = ({
+  index,
+  question,
+  open,
+  onToggle,
+  children,
+}: {
+  index: number;
+  question: string;
+  open: boolean;
+  onToggle: () => void;
+  children?: React.ReactNode;
+}): React.JSX.Element => {
+  const reduce = useReducedMotion();
+
+  return (
+    <li className="border-default border-b">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-controls={`faq-panel-${index}`}
+        className="group flex w-full cursor-pointer items-center gap-4 py-6 text-left sm:gap-6"
+      >
+        <span className="text-subtle w-7 shrink-0 font-sans text-xs tabular-nums">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span
+          className={cn(
+            "font-sans text-base leading-relaxed font-light transition-colors duration-200 sm:text-lg",
+            open ? "text-headline" : "text-body group-hover:text-headline"
+          )}
+        >
+          {question}
+        </span>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          aria-hidden="true"
+          className="text-subtle ml-auto size-4 shrink-0 transition-transform duration-300"
+        >
+          <path
+            d="M12 5v14"
+            className={cn(
+              "origin-center transition-transform duration-300 text-focus",
+              open ? "rotate-90" : "rotate-0",
+              reduce && "transition-none"
+            )}
+          />
+          <path d="M5 12h14" className="text-focus"/>
+        </svg>
+      </button>
+
+      <div
+        id={`faq-panel-${index}`}
+        role="region"
+        aria-hidden={!open}
+        className={cn(
+          "grid transition-[grid-template-rows] duration-300 ease-out",
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+          reduce && "transition-none"
+        )}
+      >
+        <div className="overflow-hidden">
+          <p
+            className={cn(
+              "text-body pl-11 font-sans text-[15px] leading-relaxed transition-opacity duration-300 sm:pl-13",
+              open ? "pb-6 opacity-100" : "opacity-0",
+              reduce && "transition-none"
+            )}
+          >
+            {children}
+          </p>
+        </div>
+      </div>
+    </li>
+  );
+};
+
 
