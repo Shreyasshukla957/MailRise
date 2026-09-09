@@ -1,6 +1,19 @@
 import React, { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { cn } from "../lib/utils";
+import { Star } from "lucide-react";
+
+const FAQ_STARS = [
+  { top: "10%", left: "8%", size: 10, rotate: -18 },
+  { top: "74%", left: "43%", size: 6, rotate: 16 },
+  { top: "16%", left: "51%", size: 9, rotate: -10 },
+  { top: "78%", left: "59%", size: 5, rotate: 24 },
+  { top: "25%", left: "18%", size: 6, rotate: 22 },
+  { top: "14%", left: "84%", size: 8, rotate: 14 },
+  { top: "42%", left: "92%", size: 11, rotate: -25 },
+  { top: "70%", left: "7%", size: 7, rotate: 20 },
+  { top: "82%", left: "88%", size: 6, rotate: -12 },
+];
 
 export const FAQ = ({
   className,
@@ -54,15 +67,29 @@ export const FAQ = ({
       id="FAQ"
       className={cn("relative w-full py-20 sm:py-28", className)}
     >
-      <div className="selection:text-screen selection:bg-mdark relative mx-auto max-w-3xl px-5 sm:px-8">
-        <Rise>
-          <h2 className="font-instrument from-mdark to-mdark/70 mb-4 flex items-center justify-center bg-linear-to-b bg-clip-text text-3xl leading-[1.15] font-medium tracking-tight text-balance text-transparent sm:text-4xl lg:text-5xl ">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {FAQ_STARS.map((star, index) => (
+          <Star
+            key={index}
+            size={star.size}
+            className="text-focus/40 absolute fill-current"
+            style={{
+              top: star.top,
+              left: star.left,
+              transform: `rotate(${star.rotate}deg)`,
+            }}
+          />
+        ))}
+      </div>
+      <div className="selection:text-screen selection:bg-mdark relative mx-auto w-full px-5 sm:px-8 flex items-start justify-center">
+        <Rise className="w-full flex h-full flex-col items-start justify-center px-20 py-30">
+          <h2 className="font-sans from-mdark to-mdark/70 mb-4 flex items-center justify-center bg-linear-to-b bg-clip-text text-3xl leading-[1.15] font-medium tracking-tight text-balance text-transparent sm:text-4xl lg:text-5xl underline underline-offset-3">
             FAQ
           </h2>
           <h3 className="text-headline/80 text-center font-sans text-2xl leading-[1.15] font-normal tracking-tight sm:text-2xl ">
             A few things you might ask
           </h3>
-          <p className="text-subtle mx-auto mt-2 max-w-md text-center font-sans leading-relaxed ">
+          <p className="text-subtle mt-2 w-full max-w-xs font-sans flex items-start justify-start">
             Everything people ask before they trust an AI with their inbox.
           </p>
         </Rise>
@@ -107,8 +134,6 @@ const FaqItem = ({
       <button
         type="button"
         onClick={onToggle}
-        aria-expanded={open}
-        aria-controls={`faq-panel-${index}`}
         className="group flex w-full cursor-pointer items-center gap-4 py-6 text-left sm:gap-6"
       >
         <span className="text-subtle w-7 shrink-0 font-sans text-xs tabular-nums">
@@ -128,7 +153,6 @@ const FaqItem = ({
           stroke="currentColor"
           strokeWidth="1.5"
           strokeLinecap="round"
-          aria-hidden="true"
           className="text-subtle ml-auto size-4 shrink-0 transition-transform duration-300"
         >
           <path
@@ -144,9 +168,6 @@ const FaqItem = ({
       </button>
 
       <div
-        id={`faq-panel-${index}`}
-        role="region"
-        aria-hidden={!open}
         className={cn(
           "grid transition-[grid-template-rows] duration-300 ease-out",
           open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
@@ -183,8 +204,9 @@ const Rise = ({
   return (
     <motion.div
       className={cn(className)}
-      initial={reduce ? false : { opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={reduce ? false : { opacity: 0, y: 28, filter: "blur(8px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.25 }}
       transition={{
         duration: 0.55,
         ease: [0.22, 1, 0.36, 1],
