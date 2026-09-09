@@ -1,4 +1,5 @@
 import React from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { Link } from "react-router";
 import { FcGoogle } from "react-icons/fc";
 import { CiLock } from "react-icons/ci";
@@ -23,19 +24,29 @@ export const Login = ({
 };
 
 const Stage = (): React.JSX.Element => {
+  const reduce = useReducedMotion();
+
   return (
     <section className="bg-hero relative h-full overflow-hidden bg-cover bg-center lg:h-auto lg:w-[58%]">
-      <div className="absolute top-0 left-0 z-10 flex items-center gap-1 px-7 py-6">
+      <div className="absolute inset-0 hidden bg-panel/40 dark:block" />
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute top-0 left-0 z-10 flex items-center gap-1 px-7 py-6"
+      >
         <img src="/image.webp" alt="" className="size-10" />
         <span className="font-geistmono text-neutral-100 text-[17px] tracking-tight selection:bg-blue-400">
           Mailrise
         </span>
-      </div>
+      </motion.div>
     </section>
   );
 };
 
 const Panel = (): React.JSX.Element => {
+  const reduce = useReducedMotion();
+
   function authentication() {
     window.location.href = "http://localhost:5000/auth/google";
   }
@@ -46,15 +57,26 @@ const Panel = (): React.JSX.Element => {
 
       <main className="relative flex flex-1 items-center">
         <div className="mx-auto w-full max-w-sm px-8 py-16 lg:px-14">
-          <img src="/image.webp" alt="" className="size-14" />
-          <h1 className="font-instrument text-headline mt-3 text-[32px] leading-[1.08] tracking-[-0.015em] lg:text-[32px]">
-            Sign in to Mailrise
-          </h1>
-          <p className="font-lora text-subtle mt-2 text-[11px] font-semibold tracking-[0.16em]">
-            SECURE SIGN-IN
-          </p>
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <img src="/image.webp" alt="" className="size-14" />
+            <h1 className="font-instrument text-headline mt-3 text-[32px] leading-[1.08] tracking-[-0.015em] lg:text-[32px]">
+              Sign in to Mailrise
+            </h1>
+            <p className="font-lora text-subtle mt-2 text-[11px] font-semibold tracking-[0.16em]">
+              SECURE SIGN-IN
+            </p>
+          </motion.div>
 
-          <div className="mt-20">
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-20"
+          >
             <button
               type="button"
               onClick={authentication}
@@ -63,11 +85,16 @@ const Panel = (): React.JSX.Element => {
               <FcGoogle size={18} className="mr-2" /> Login with Google
               <span className="pointer-events-none absolute inset-y-[-10%] left-[-60%] w-[36%] skew-x-[-20deg] bg-linear-to-r from-transparent via-white/35 to-transparent transition-[left] duration-500 ease-out group-hover:left-[130%]" />
             </button>
-          </div>
+          </motion.div>
 
-          <p className="text-subtle mt-6 flex items-center justify-center gap-1.5 text-center text-[12.5px]">
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.26, ease: [0.22, 1, 0.36, 1] }}
+            className="text-subtle mt-6 flex items-center justify-center gap-1.5 text-center text-[12.5px]"
+          >
             <CiLock className="size-3" /> Secure passwordless authentication.
-          </p>
+          </motion.p>
         </div>
       </main>
 
