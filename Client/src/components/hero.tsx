@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "../lib/utils";
-// import { motion } from "motion/react";
+import { motion } from "motion/react";
 import { Flightanimation } from "./flightanimation";
 import { Header } from "./header";
 import { Dashboard } from "./dashboard";
@@ -65,13 +65,16 @@ const DashboardBorder = ({
   className?: string;
 }) => {
   return (
-    <div
+    <motion.div
       className={cn(
         "relative z-10 mt-12 w-full max-w-4xl rounded-xl sm:mt-16",
         className
       )}
+      initial={{ y: 36, opacity: 0, filter: "blur(8px)" }}
+      animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+      transition={{ duration: 0.55, delay: 0.24, ease: "linear" }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
