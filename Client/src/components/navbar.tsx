@@ -15,6 +15,10 @@ export const Navbar = ({
   const menuButton = useRef<HTMLButtonElement>(null);
   const navlinks = [
     {
+      name: "How it works",
+      href: "#Works",
+    },
+    {
       name: "Features",
       href: "#features",
     },
