@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { cn } from "../lib/utils";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import { Theme } from "../context/theme";
+import { Link, useNavigate } from "react-router";
+import { motion } from "motion/react";
 
 export const Navbar = ({
   className,
 }: {
   className?: string;
 }): React.JSX.Element => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const menuButton = useRef<HTMLButtonElement>(null);
   const navlinks = [
     {
       name: "Features",
@@ -17,62 +22,127 @@ export const Navbar = ({
       name: "FAQ",
       href: "#FAQ",
     },
-    {
-      name: "How it works",
-      href: "#Works",
-    },
   ];
 
+  const closeMenu = () => setIsMenuOpen(false);
+
+  const handleGetStarted = () => navigate("/workspace");
+
   return (
-    <div
+    <motion.header
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && isMenuOpen) {
+          closeMenu();
+          menuButton.current?.focus();
+        }
+      }}
       className={cn(
-        "sticky top-0 z-50 h-15 w-full",
-        "flex items-center justify-between px-6 py-2",
-        "font-manrope bg-screen/80 backdrop-blur-md",
-        "border-subtle/20 border-b",
+        "border-default/70 bg-screen/90 fixed top-0 z-50 w-full mx-auto border-b font-sans backdrop-blur-md rounded-xs",
         className
       )}
+      initial={{ y: 28, opacity: 0, filter: "blur(8px)" }}
+      animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+      transition={{ duration: 0.45, ease: "linear" }}
     >
-      <div className="flex items-center">
-        <img src="./image.webp" className="h-9 w-auto pb-1" />
-        <span className="hover:text-focus font-geistmono cursor-pointer font-semibold tracking-tighter transition-all duration-200">
-          Mailrise
-        </span>
-      </div>
+      <a
+        href="#introduction"
+        className="bg-screen text-headline focus-visible:ring-focus absolute top-2 left-5 z-10 -translate-y-24 rounded-md px-4 py-2 focus:translate-y-0 focus-visible:ring-2"
+      >
+        Skip to content
+      </a>
+      <div className="mx-auto flex h-16 w-full items-center justify-between px-5 sm:px-8 lg:px-10">
+        <Link
+          className="group focus-visible:ring-focus focus-visible:ring-offset-screen flex w-fit items-center gap-1 rounded-md py-1 outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          onClick={closeMenu}
+          to="/"
+        >
+          <img
+            alt="Mailrise"
+            width={32}
+            height={32}
+            className="size-8"
+            src="/image.webp"
+          />
+          <span className="text-mdark/80 group-hover:text-focus font-geistmono text-md font-normal tracking-tighter transition-colors duration-200">
+            Mailrise
+          </span>
+        </Link>
 
-      <div className="flex items-center justify-around gap-x-5">
-        <div className="hidden cursor-pointer items-center justify-center gap-x-4 text-[16px] lg:flex">
-          {navlinks.map((items) => {
-            return (
+        <div className="flex items-center gap-2 sm:gap-3">
+          <nav
+            className="hidden items-center gap-1 lg:flex"
+          >
+            {navlinks.map((item) => (
               <a
-                className="text-subtle hover:text-mdark group hover:bg-glow/10 relative rounded-md p-2 text-[15px] font-light transition-all duration-200 text-shadow-xs"
-                href={items.href}
-                key={items.href}
+                className="text-body hover:bg-hover/40 hover:text-mdark focus-visible:ring-focus relative rounded-md px-3 py-2.5 font-sans text-[14px] font-medium transition-colors duration-200 outline-none focus-visible:ring-2"
+                href={item.href}
+                key={item.href}
               >
-                {items.name}
-
-                {/* <span className="bg-accent/75 absolute bottom-0 left-0 h-px w-0 transition-all duration-200 group-hover:w-full"></span> */}
+                {item.name}
               </a>
-            );
-          })}
-        </div>
+            ))}
+          </nav>
 
-        <Theme />
+          <Theme />
 
-        <div className="flex items-center justify-center gap-4">
-          <button className="text-focus border-focus flex cursor-pointer rounded-xl border px-3 py-2 text-[14px] font-semibold shadow-sm text-shadow-sm">
-            Sign In
+          <button
+            type="button"
+            onClick={handleGetStarted}
+            className="border-focus/30 bg-focus/5 hover:border-focus group focus-visible:ring-focus focus-visible:ring-offset-screen hidden cursor-pointer rounded-md border p-[1.5px] transition-[border-color,box-shadow,transform] duration-200 ease-out hover:shadow-[inset_0_0_2px_0.5px_var(--accent-bright)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:flex"
+          >
+            <span className="bg-focus text-panel flex items-center rounded-md px-3 py-2 text-[15px] font-semibold shadow-md transition-shadow duration-200 text-shadow-md group-hover:shadow-lg">
+              Get Started
+              <ArrowRight
+                className="ml-1 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+                size={16}
+              />
+            </span>
           </button>
 
-
-          <GetStarted
-            className="border-focus/30 bg-focus/5 hover:border-focus group flex cursor-pointer rounded-md border p-[1.5px] transition-all duration-200 hover:shadow-[inset_0_0_2px_0.5px_var(--accent-bright)]"
-            label="Get Started"
+          <HamburgerButton
+            isMenuOpen={isMenuOpen}
+            menuButton={menuButton}
+            onClick={() => setIsMenuOpen((open) => !open)}
           />
-          
         </div>
       </div>
-    </div>
+
+      {isMenuOpen && (
+        <nav
+          className="border-default bg-screen absolute inset-x-0 top-full flex max-h-[calc(100dvh-4rem)] flex-col gap-1 overflow-y-auto overscroll-contain border-b px-5 py-4 shadow-sm sm:px-8 lg:hidden"
+          id="mobile-navigation"
+        >
+          {navlinks.map((item) => (
+            <a
+              className="text-body hover:bg-hover/40 hover:text-headline focus-visible:ring-focus rounded-lg px-3 py-3 font-lora text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none tracking-wider"
+              href={item.href}
+              key={item.href}
+              onClick={closeMenu}
+            >
+              {item.name}
+            </a>
+          ))}
+          <div className="border-default mt-2 border-t pt-4 sm:hidden">
+            <button
+              type="button"
+              className="border-focus/30 bg-focus/5 hover:border-focus group focus-visible:ring-focus flex cursor-pointer rounded-md border p-[1.5px] transition-[border-color,box-shadow,transform] duration-200 ease-out hover:-translate-y-px hover:shadow-[inset_0_0_2px_0.5px_var(--accent-bright)] focus-visible:ring-2 focus-visible:outline-none"
+              onClick={() => {
+                closeMenu();
+                handleGetStarted();
+              }}
+            >
+              <span className="bg-focus text-panel flex w-full items-center justify-center rounded-md px-3 py-2.5 text-[15px] font-semibold shadow-md transition-shadow duration-200 text-shadow-md group-hover:shadow-lg">
+                Get Started
+                <ArrowRight
+                  className="ml-1 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+                  size={16}
+                />
+              </span>
+            </button>
+          </div>
+        </nav>
+      )}
+    </motion.header>
   );
 };
 
@@ -82,16 +152,41 @@ export const GetStarted = ({
 }: {
   className?: string;
   label?: string;
+}) => (
+  <button
+    className={cn(
+      "bg-focus text-cta-button inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm",
+      className
+    )}
+    type="button"
+  >
+    {label}
+    <ArrowRight className="ml-1.5" size={15} />
+  </button>
+);
+
+const HamburgerButton = ({
+  isMenuOpen,
+  menuButton,
+  onClick,
+}: {
+  isMenuOpen: boolean;
+  menuButton: React.RefObject<HTMLButtonElement | null>;
+  onClick: () => void;
 }) => {
   return (
-    <div className={cn("", className)}>
-      <button className="bg-focus text-panel group flex cursor-pointer items-center rounded-md px-3 py-2 text-[14px] font-semibold shadow-md text-shadow-md">
-        {label}
-        <ArrowRight
-          className="ml-1 flex items-center justify-center transition-transform duration-200 group-hover:translate-x-0.5"
-          size={16}
-        />
-      </button>
-    </div>
+    <button
+      ref={menuButton}
+      title={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+      className="border-default text-mdark hover:border-subtle/50 focus-visible:ring-focus flex size-10 cursor-pointer items-center justify-center rounded-lg border transition-colors duration-200 focus-visible:ring-2 focus-visible:outline-none lg:hidden"
+      onClick={onClick}
+      type="button"
+    >
+      {isMenuOpen ? (
+        <X size={18} />
+      ) : (
+        <Menu size={18} />
+      )}
+    </button>
   );
 };
