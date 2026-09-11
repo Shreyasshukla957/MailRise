@@ -2,7 +2,10 @@ import React from "react";
 import { cn } from "../lib/utils";
 import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
-import { useGetStartedNavigation } from "../hooks/useGetStartedNavigation";
+import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { Link } from "react-router";
 
 export const Header = ({
   className,
@@ -11,7 +14,8 @@ export const Header = ({
   className: string;
   children?: React.ReactNode;
 }): React.JSX.Element => {
-  const handleGetStarted = useGetStartedNavigation();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   return (
     <section
@@ -24,14 +28,10 @@ export const Header = ({
       {children}
       <button
         type="button"
-        onClick={handleGetStarted}
-        className="border-default bg-card/50 text-body hover:border-focus/50 hover:text-headline focus-visible:ring-focus group focus-visible:ring-offset-screen inline-flex items-center gap-1.5 rounded-md border px-4.5 py-[4.5px] font-sans text-xs font-medium transition-[border-color,box-shadow] duration-500 ease-in-out hover:shadow-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+        onClick={() => navigate(isAuthenticated ? "/workspace" : "/login")}
+        className="border-default bg-card/50 text-body hover:border-focus/50 hover:text-headline focus-visible:ring-focus group focus-visible:ring-offset-screen inline-flex items-center gap-1.5 rounded-md border px-4.5 py-[4.5px] font-sans text-xs font-medium hover:shadow-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
       >
-        <img
-          src="/image.webp"
-          alt=""
-          className="size-[19px] rounded-[3px]"
-        />
+        <img src="/image.webp" alt="" className="size-[19px] rounded-[3px]" />
         Enter your email workspace
         <ArrowRight
           size={14}
@@ -62,37 +62,62 @@ export const Header = ({
       </p>
 
       <div className="mt-7 flex w-full max-w-sm flex-col items-center justify-center gap-3 min-[400px]:w-auto min-[400px]:max-w-none min-[400px]:flex-row sm:mt-8">
-        <div className="border-default bg-card/60 text-subtle hover:text-headline focus-visible:ring-focus focus-visible:ring-offset-screen inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border px-5 font-sans text-[13px] font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none min-[400px]:w-43">
+        <div className="border-default bg-card/60 text-subtle hover:text-headline focus-visible:ring-focus focus-visible:ring-offset-screen inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border px-5 font-sans text-[13px] font-medium focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none min-[400px]:w-43">
           Let's watch Demo
           <ArrowRight size={15} />
         </div>
-        <Ctabutton />
+        <Link to="/login">
+          <Ctabutton />
+        </Link>
       </div>
     </section>
   );
 };
 
-export const Ctabutton = ({ className }: { className?: string }) => {
-  const handleGetStarted = useGetStartedNavigation();
+export const Ctabutton = ({
+  className,
+  label = "Sign Up For Free",
+  icon,
 
+  overlayClassName,
+  contentClassName,
+}: {
+  className?: string;
+  label?: string;
+  icon?: React.ReactNode;
+
+  overlayClassName?: string;
+  contentClassName?: string;
+}) => {
   return (
     <button
       type="button"
-      onClick={handleGetStarted}
       className={cn(
         "group bg-focus relative flex h-12 w-43 cursor-pointer items-center justify-center rounded-md shadow-sm transition-shadow duration-200 hover:shadow-md",
         className
       )}
     >
-      <span className="text-cta-button flex items-center justify-center font-sans text-[13px] font-medium">
-        Sign Up For Free
-        <ArrowRight
-          size={17}
-          className="ml-1.5 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
-        />
+      <span
+        className={cn(
+          "text-cta-button flex items-center justify-center font-sans text-[13px] font-medium",
+          contentClassName
+        )}
+      >
+        {label}
+        {icon ?? (
+          <ArrowRight
+            size={17}
+            className="ml-1.5 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+          />
+        )}
       </span>
 
-      <div className="border-hover/50 group-hover:border-hover/90 pointer-events-none absolute h-11 w-41.5 rounded-md border transition-all duration-300 group-hover:shadow-[inset_0px_0px_3px_1px_var(--accent-inset)]"></div>
+      <div
+        className={cn(
+          "border-hover/50 group-hover:border-hover/90 pointer-events-none absolute h-11 w-41.5 rounded-md border transition-all duration-300 group-hover:shadow-[inset_0px_0px_3px_1px_var(--accent-inset)]",
+          overlayClassName
+        )}
+      />
     </button>
   );
 };
