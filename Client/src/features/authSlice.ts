@@ -20,6 +20,19 @@ export const fetchUser = createAsyncThunk<
   }
 });
 
+export const logoutUser = createAsyncThunk<
+  object,
+  void,
+  { rejectValue: object | string }
+>("auth/logout", async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.post("/auth/logout");
+    return response?.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response?.data || "Something went wrong");
+  }
+});
+
 interface AuthState {
   isLoading: boolean;
   isAuthenticated: boolean;
@@ -53,6 +66,24 @@ const authSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(fetchUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isAuthenticated = false;
+        state.error = action.payload || "Something went wrong";
+        state.user = null;
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+        state.isAuthenticated = false;
+        state.error = null;
+        state.user = null;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isAuthenticated = false;
+        state.error = null;
+        state.user = null;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isAuthenticated = false;
         state.error = action.payload || "Something went wrong";
