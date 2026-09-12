@@ -1,14 +1,18 @@
 import React from "react";
 import { Workspace } from "./Workspace";
 import { cn } from "../lib/utils";
-import { MdSpaceDashboard } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
-import { BsPersonWorkspace } from "react-icons/bs";
-import { BsFillInboxesFill } from "react-icons/bs";
-import { IoIosHome, IoIosSearch } from "react-icons/io";
+import { IoIosSearch } from "react-icons/io";
 import { motion } from "motion/react";
 import { Inbox } from "./Inbox";
 import { useState } from "react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  BriefcaseBusinessIcon,
+  DashboardSquare02Icon,
+  Home02Icon,
+  InboxIcon,
+  UserCircleIcon,
+} from "@hugeicons/core-free-icons";
 
 import {
   ChevronLeft,
@@ -32,7 +36,7 @@ export const Dashboard = ({
   return (
     <div
       className={cn(
-        "from-default/60 to-default/20 flex min-h-150 w-full flex-col rounded-md bg-linear-to-b",
+        "from-default/60 to-default/20 flex min-h-150 w-full flex-col rounded-xl bg-linear-to-b",
         className
       )}
     >
@@ -48,35 +52,35 @@ const StudioHeader = ({ className }: { className?: string }) => {
     {
       id: "home",
       label: "Home",
-      icon: IoIosHome,
+      icon: Home02Icon,
       width: "w-[60%]",
       px: "px-3",
     },
     {
       id: "workspace",
       label: "Workspace",
-      icon: BsPersonWorkspace,
+      icon: BriefcaseBusinessIcon,
       width: "w-[70%]",
       px: "px-2",
     },
     {
       id: "dashboard",
       label: "Dashboard",
-      icon: MdSpaceDashboard,
+      icon: DashboardSquare02Icon,
       width: "w-[70%]",
       px: "px-2",
     },
     {
       id: "profile",
       label: "Profile",
-      icon: CgProfile,
+      icon: UserCircleIcon,
       width: "w-[60%]",
       px: "px-4",
     },
     {
       id: "inbox",
       label: "Inbox",
-      icon: BsFillInboxesFill,
+      icon: InboxIcon,
       width: "w-[60%]",
       px: "px-4",
     },
@@ -86,19 +90,24 @@ const StudioHeader = ({ className }: { className?: string }) => {
     <div
       className={cn("grid h-13 w-full grid-cols-6 items-center rounded-t-md")}
     >
-      <div className="col-span-1 flex h-[75%] items-center justify-center gap-x-1 px-4">
+      <div className="col-span-1 flex h-[75%] items-center justify-start gap-x-2 pl-6">
         <span className="size-2.5 rounded-full bg-red-600"></span>
         <span className="size-2.5 rounded-full bg-green-600"></span>
         <span className="size-2.5 rounded-full bg-yellow-500"></span>
       </div>
 
-      {NAV_TABS.map(({ id, label, icon: Icon, width, px }) => (
+      {NAV_TABS.map(({ id, label, icon, width, px }) => (
         <div
           key={id}
           className="font-geist text-glow col-span-1 flex h-[75%] items-center justify-center"
         >
           <span className="hover:bg-hover mx-auto flex h-full w-[90%] cursor-pointer items-center justify-center px-1 text-[13px] font-medium ease-in text-shadow-xs hover:rounded-xl">
-            <Icon size={13} className="mr-1.5 mb-1 shrink-0" />
+            <HugeiconsIcon
+              icon={icon}
+              size={13}
+              strokeWidth={1.8}
+              className="mr-1.5 mb-1 shrink-0"
+            />
             <span className="truncate">{label}</span>
           </span>
         </div>
@@ -156,7 +165,7 @@ const StudioHeader2 = ({ className }: { className?: string }) => {
         </button>
       </div>
 
-      <div className="border-default bg-screen/60 mx-3 flex h-9 flex-1 items-center justify-between border px-3 font-mono text-[11px] shadow-2xs">
+      <div className="border-default bg-screen/60 mx-3 flex h-9 flex-1 items-center justify-between border px-3 font-satoshi text-[11px] shadow-2xs">
         <div className="text-subtle/80 flex items-center gap-x-1.5">
           <Lock size={11} className="text-subtle/50" />
           <span className="text-foreground/90 font-medium">
@@ -200,10 +209,10 @@ const DashboardBody = ({
   );
 
   const NAV_ITEMS = [
-    { id: "home", label: "Home", icon: IoIosHome },
-    { id: "workspace", label: "Workspace", icon: BsPersonWorkspace },
-    { id: "inbox", label: "Inbox", icon: BsFillInboxesFill },
-    { id: "dashboard", label: "Dashboard", icon: MdSpaceDashboard },
+    { id: "home", label: "Home", icon: Home02Icon },
+    { id: "workspace", label: "Workspace", icon: BriefcaseBusinessIcon },
+    { id: "inbox", label: "Inbox", icon: InboxIcon },
+    { id: "dashboard", label: "Dashboard", icon: DashboardSquare02Icon },
   ];
 
   return (
@@ -228,7 +237,6 @@ const DashboardBody = ({
           </span>
 
           {NAV_ITEMS.map((item) => {
-            const Icon = item.icon;
             return (
               <span
                 onClick={() => {
@@ -242,7 +250,12 @@ const DashboardBody = ({
                   item.id === activetab && `bg-subtle/10 rounded-xl`
                 )}
               >
-                <Icon className="mb-1 size-4" />
+                <HugeiconsIcon
+                  icon={item.icon}
+                  size={16}
+                  strokeWidth={1.8}
+                  className="mb-1 shrink-0"
+                />
                 <span className="border-subtle/10 ml-2 border-b">
                   {item.label}
                 </span>
@@ -271,7 +284,7 @@ const DashboardBody = ({
           />
         )}
 
-        <div className="border-hover border-0.5px bg-card absolute -right-15 -bottom-18 col-span-5 h-full w-[95%] rounded-2xl border shadow-[inset_0px_0px_1px_1px_var(--accent-border)]">
+        <div className="border-hover border-0.5px bg-card absolute -right-15 -bottom-18 col-span-5 h-full w-[95%] rounded-xl border shadow-[inset_0px_0px_1px_1px_var(--accent-border)]">
           {activetab === "inbox" ? (
             <Inbox
               className={cn(
