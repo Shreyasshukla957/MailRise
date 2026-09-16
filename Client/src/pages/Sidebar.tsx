@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { cn } from "../lib/utils";
-import { Outlet, Link, useLocation } from "react-router";
+import { Outlet, Link, useLocation, useNavigate } from "react-router";
 import { BsLayoutSidebarInsetReverse } from "react-icons/bs";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -10,7 +11,11 @@ import {
   Home02Icon,
   InboxIcon,
 } from "@hugeicons/core-free-icons";
+import { LogOut } from "lucide-react";
+import { Theme } from "../context/theme";
 import { SidebarControl } from "../components/SidebarControl";
+import type { AppDispatch, RootState } from "../store/store";
+import { logoutUser } from "../features/authSlice";
 
 const SIDEBAR_LINKS = [
   {
@@ -44,7 +49,20 @@ export const Sidebar = ({
   children?: React.ReactNode;
 }) => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const { user } = useSelector((state: RootState) => state.auth);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+
+  const firstName = user?.name.trim().split(" ")[0] || "";
+  const initial = user?.name[0] || "";
+
+  const handleLogout = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    await dispatch(logoutUser());
+    navigate("/");
+  };
 
   return (
     <div
@@ -55,7 +73,8 @@ export const Sidebar = ({
     >
       <div
         className={cn(
-          "group/sidebar bg-card relative h-full shrink-0 cursor-pointer overflow-hidden transition-[width] duration-300 ease-in-out",
+          "group/sidebar bg-card relative h-full shrink-0 cursor-pointer transition-[width] duration-300 ease-in-out",
+          isProfileMenuOpen ? "overflow-visible" : "overflow-hidden",
           isCollapsed ? "w-[4%] before:absolute before:inset-0 before:bg-subtle/10" : "w-[16%]"
         )}
       >
@@ -80,6 +99,18 @@ export const Sidebar = ({
               <SidebarControl onClick={() => setIsCollapsed(true)} />
             </div>
           </div>
+
+          <button
+            type="button"
+            className="mb-[25px] flex h-[33px] w-full items-center gap-x-3 rounded-xl px-3 text-left"
+          >
+            <span className="bg-focus text-panel flex size-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold">
+              {initial}
+            </span>
+            <span className="text-subtle/90 flex-1 truncate font-sans text-sm font-light">
+              {firstName} Workspace
+            </span>
+          </button>
 
           {SIDEBAR_LINKS.map(({ link, button, icon, backIcon }) => (
             <Link
@@ -116,6 +147,43 @@ export const Sidebar = ({
               </span>
             </Link>
           ))}
+
+          <div
+            onClick={() => setIsProfileMenuOpen((open) => !open)}
+            className="bg-panel/80 ring-focus/15 relative mt-auto flex h-12.5 w-full cursor-pointer items-center gap-x-2.5 self-center rounded-xl px-3 ring-1"
+          >
+            {isProfileMenuOpen && (
+              <div className="border-default bg-card absolute bottom-16 left-0 z-20 w-40 rounded-xl border p-1 shadow-lg">
+                <Theme variant="appearance" />
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="text-subtle/80 hover:bg-hover flex h-8 w-full cursor-pointer items-center gap-x-2 rounded-lg px-2.5 font-sans text-xs font-medium transition-colors duration-200"
+                >
+                  <LogOut size={14} />
+                  Sign out
+                </button>
+              </div>
+            )}
+
+            {user?.profilepicture ? (
+              <img
+                src={user.profilepicture}
+                alt={user.name}
+                className="size-9 shrink-0 rounded-full object-cover"
+              />
+            ) : (
+              <div className="bg-hover size-9 shrink-0 rounded-full" />
+            )}
+            <div className="flex min-w-0 flex-col">
+              <span className="text-headline/90 truncate font-sans text-xs font-medium">
+                {user?.name}
+              </span>
+              <span className="text-subtle/70 truncate font-sans text-[10px]">
+                {user?.emailId}
+              </span>
+            </div>
+          </div>
         </nav>
 
         <button
@@ -153,6 +221,21 @@ export const Sidebar = ({
                 />
               </Link>
             ))}
+          </div>
+        )}
+
+        {isCollapsed && (
+          <div className="absolute bottom-[35px] left-[26px]">
+            {user?.profilepicture ? (
+              <img
+                src={user.profilepicture}
+                alt={user.name}
+                title={user.name}
+                className="border-default/70 size-8 rounded-full border object-cover"
+              />
+            ) : (
+              <div className="bg-hover border-default/70 size-8 rounded-full border" />
+            )}
           </div>
         )}
       </div>
