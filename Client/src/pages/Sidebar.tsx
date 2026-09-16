@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { cn } from "../lib/utils";
 import { Outlet, Link, useLocation } from "react-router";
+import { BsLayoutSidebarInsetReverse } from "react-icons/bs";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   ArrowLeft01Icon,
@@ -9,6 +10,7 @@ import {
   Home02Icon,
   InboxIcon,
 } from "@hugeicons/core-free-icons";
+import { SidebarControl } from "../components/SidebarControl";
 
 const SIDEBAR_LINKS = [
   {
@@ -42,6 +44,7 @@ export const Sidebar = ({
   children?: React.ReactNode;
 }) => {
   const { pathname } = useLocation();
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
     <div
@@ -50,9 +53,19 @@ export const Sidebar = ({
         className
       )}
     >
-      <div className="bg-card relative h-full w-[16%] shrink-0 overflow-hidden">
-        <nav className="bg-subtle/10 flex h-full w-full flex-col gap-y-2 px-3 py-6">
-          <div className="mb-2 flex h-11 items-center px-2 pb-2">
+      <div
+        className={cn(
+          "group/sidebar bg-card relative h-full shrink-0 cursor-pointer overflow-hidden transition-[width] duration-300 ease-in-out",
+          isCollapsed ? "w-[4%] before:absolute before:inset-0 before:bg-subtle/10" : "w-[16%]"
+        )}
+      >
+        <nav
+          className={cn(
+            "bg-subtle/10 flex h-full w-full flex-col gap-y-2 px-3 py-6",
+            isCollapsed && "pointer-events-none opacity-0"
+          )}
+        >
+          <div className="border-default/60 mb-2 flex h-11 items-center justify-between border-b px-2 pb-2">
             <div className="flex min-w-0 items-center gap-x-2.5">
               <img
                 src="/image.webp"
@@ -62,6 +75,9 @@ export const Sidebar = ({
               <span className="text-headline/90 font-geistmono text-sm font-medium tracking-tight">
                 Mailrise
               </span>
+            </div>
+            <div className="border-default/60 ml-2 shrink-0 border-l pl-2">
+              <SidebarControl onClick={() => setIsCollapsed(true)} />
             </div>
           </div>
 
@@ -101,6 +117,44 @@ export const Sidebar = ({
             </Link>
           ))}
         </nav>
+
+        <button
+          type="button"
+          title="Open sidebar"
+          onClick={() => setIsCollapsed(false)}
+          className={cn(
+            "text-subtle hover:bg-card hover:text-foreground absolute top-6 left-[17px] flex size-10 cursor-pointer items-center justify-center rounded-full transition-none",
+            isCollapsed ? "opacity-100" : "pointer-events-none opacity-0"
+          )}
+        >
+          <BsLayoutSidebarInsetReverse className="size-4 translate-y-0.5" />
+        </button>
+
+        {isCollapsed && (
+          <div className="absolute top-37.75 left-0 flex w-full flex-col items-center justify-center gap-y-2">
+            {SIDEBAR_LINKS.map(({ link, button, icon }) => (
+              <Link
+                key={link}
+                to={link}
+                title={button}
+                className="group/closed text-headline/90 relative flex h-[34px] w-full items-center justify-start"
+              >
+                <span
+                  className={cn(
+                    "border-default/70 bg-screen/90 pointer-events-none absolute inset-y-0 left-[5%] w-[90%] rounded-xl border opacity-0 backdrop-blur-md transition-opacity duration-200 group-hover/closed:opacity-100",
+                    pathname === link && "opacity-100"
+                  )}
+                />
+                <HugeiconsIcon
+                  icon={icon}
+                  size={16}
+                  strokeWidth={1.8}
+                  className="text-headline/90 relative z-10 ml-[28px]"
+                />
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
       <Outlet />
     </div>
