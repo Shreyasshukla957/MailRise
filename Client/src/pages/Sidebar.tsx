@@ -75,39 +75,51 @@ export const Sidebar = ({
         className={cn(
           "group/sidebar bg-card relative h-full shrink-0 cursor-pointer transition-[width] duration-300 ease-in-out",
           isProfileMenuOpen ? "overflow-visible" : "overflow-hidden",
-          isCollapsed ? "w-[4%] before:absolute before:inset-0 before:bg-subtle/10" : "w-[16%]"
+          isCollapsed
+            ? "w-14 before:absolute before:inset-0 before:bg-subtle/10 md:w-16 lg:w-[4%]"
+            : "w-14 md:w-[19%] lg:w-[16%]"
         )}
       >
         <nav
           className={cn(
-            "bg-subtle/10 flex h-full w-full flex-col gap-y-2 px-3 py-6",
+            "bg-subtle/10 flex h-full w-full flex-col gap-y-2 px-1.5 py-6 md:px-3",
             isCollapsed && "pointer-events-none opacity-0"
           )}
         >
-          <div className="border-default/60 mb-2 flex h-11 items-center justify-between border-b px-2 pb-2">
-            <div className="flex min-w-0 items-center gap-x-2.5">
+          <div className="border-default/60 mb-2 flex h-11 items-center justify-center border-b px-0 pb-2 md:justify-between md:px-2">
+            <div
+              className={cn(
+                "flex min-w-0 items-center gap-x-2.5 transition-opacity duration-150",
+                isCollapsed ? "opacity-0" : "delay-75 opacity-100"
+              )}
+            >
               <img
                 src="/image.webp"
                 alt="Mailrise logo"
                 className="size-7 shrink-0 rounded-md object-cover transition-none"
               />
-              <span className="text-headline/90 font-geistmono text-sm font-medium tracking-tight">
+              <span className="text-headline/90 hidden font-geistmono text-sm font-medium tracking-tight md:inline">
                 Mailrise
               </span>
             </div>
-            <div className="border-default/60 ml-2 shrink-0 border-l pl-2">
+            <div
+              className={cn(
+                "border-default/60 ml-2 hidden shrink-0 border-l pl-2 transition-opacity duration-150 md:block",
+                isCollapsed ? "opacity-0" : "delay-100 opacity-100"
+              )}
+            >
               <SidebarControl onClick={() => setIsCollapsed(true)} />
             </div>
           </div>
 
           <button
             type="button"
-            className="mb-[25px] flex h-[33px] w-full items-center gap-x-3 rounded-xl px-3 text-left"
+            className="mb-2 flex h-[33px] w-full items-center justify-center gap-x-3 rounded-xl px-0 text-left md:mb-[25px] md:justify-start md:px-3"
           >
             <span className="bg-focus text-panel flex size-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold">
               {initial}
             </span>
-            <span className="text-subtle/90 flex-1 truncate font-sans text-sm font-light">
+            <span className="text-subtle/90 hidden flex-1 truncate font-sans text-sm font-light md:block">
               {firstName} Workspace
             </span>
           </button>
@@ -117,7 +129,7 @@ export const Sidebar = ({
               key={link}
               to={link}
               className={cn(
-                "border-default/0 font-geist hover:border-default/70 hover:bg-screen/90 group relative flex h-[34px] items-center gap-x-3 rounded-xl border px-4 text-sm font-light backdrop-blur-md transition-transform duration-300 ease-linear",
+                "border-default/0 font-geist hover:border-default/70 hover:bg-screen/90 group relative flex h-[34px] items-center justify-center gap-x-3 rounded-xl border px-0 text-sm font-light backdrop-blur-md transition-transform duration-300 ease-linear md:justify-start md:px-4",
                 pathname === link && "border-default/70 bg-screen/90"
               )}
             >
@@ -126,20 +138,20 @@ export const Sidebar = ({
                   icon={backIcon}
                   size={13}
                   strokeWidth={2}
-                  className="text-headline/90 absolute left-4 opacity-0 transition-all duration-200 group-hover:opacity-100"
+                  className="text-headline/90 absolute left-4 hidden opacity-0 transition-all duration-200 group-hover:opacity-100 md:block"
                 />
               )}
               <span
                 className={cn(
                   "text-headline/90 relative flex size-4 shrink-0 items-center justify-center transition-all duration-200",
-                  backIcon && "group-hover:translate-x-4"
+                  backIcon && "group-hover:translate-x-0 md:group-hover:translate-x-4"
                 )}
               >
                 <HugeiconsIcon icon={icon} size={16} strokeWidth={1.8} />
               </span>
               <span
                 className={cn(
-                  "text-headline/80 transition-all duration-200",
+                  "text-headline/80 hidden transition-all duration-200 md:block",
                   backIcon && "group-hover:translate-x-4"
                 )}
               >
@@ -150,7 +162,7 @@ export const Sidebar = ({
 
           <div
             onClick={() => setIsProfileMenuOpen((open) => !open)}
-            className="bg-panel/80 ring-focus/15 relative mt-auto flex h-12.5 w-full cursor-pointer items-center gap-x-2.5 self-center rounded-xl px-3 ring-1"
+            className="bg-panel/80 ring-focus/15 relative mt-auto flex h-12.5 w-full cursor-pointer items-center justify-center gap-x-2.5 self-center rounded-xl px-0 ring-1 md:justify-start md:px-3"
           >
             {isProfileMenuOpen && (
               <div className="border-default bg-card absolute bottom-16 left-0 z-20 w-40 rounded-xl border p-1 shadow-lg">
@@ -170,12 +182,12 @@ export const Sidebar = ({
               <img
                 src={user.profilepicture}
                 alt={user.name}
-                className="size-9 shrink-0 rounded-full object-cover"
+                className="size-7 shrink-0 rounded-full object-cover md:size-9"
               />
             ) : (
-              <div className="bg-hover size-9 shrink-0 rounded-full" />
+              <div className="bg-hover size-7 shrink-0 rounded-full md:size-9" />
             )}
-            <div className="flex min-w-0 flex-col">
+            <div className="hidden min-w-0 flex-col md:flex">
               <span className="text-headline/90 truncate font-sans text-xs font-medium">
                 {user?.name}
               </span>
@@ -191,7 +203,7 @@ export const Sidebar = ({
           title="Open sidebar"
           onClick={() => setIsCollapsed(false)}
           className={cn(
-            "text-subtle hover:bg-card hover:text-foreground absolute top-6 left-[17px] flex size-10 cursor-pointer items-center justify-center rounded-full transition-none",
+            "text-subtle hover:bg-hover hover:text-foreground absolute top-6 left-2 flex size-10 cursor-pointer items-center justify-center rounded-full transition-opacity duration-75 md:left-[17px]",
             isCollapsed ? "opacity-100" : "pointer-events-none opacity-0"
           )}
         >
@@ -217,7 +229,7 @@ export const Sidebar = ({
                   icon={icon}
                   size={16}
                   strokeWidth={1.8}
-                  className="text-headline/90 relative z-10 ml-[28px]"
+                  className="text-headline/90 relative z-10 mx-auto ml-0 md:mx-0 md:ml-[28px]"
                 />
               </Link>
             ))}
@@ -225,7 +237,7 @@ export const Sidebar = ({
         )}
 
         {isCollapsed && (
-          <div className="absolute bottom-[35px] left-[26px]">
+          <div className="absolute bottom-[35px] left-1/2 -translate-x-1/2 md:left-[26px] md:translate-x-0">
             {user?.profilepicture ? (
               <img
                 src={user.profilepicture}
