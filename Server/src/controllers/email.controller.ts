@@ -4,25 +4,8 @@ import { History } from "../models/History.js"
 import { User } from "../models/User.js"
 import { Oauth2Client } from "../config/googleOauth.js"
 import { DispatchMail } from "../services/mailService.js"
-
-
-const systemPrompt = `
-You are MailRise's email-drafting assistant.
-Given the user's instruction, any email thread context, and examples of the user's past sent emails, write a complete, ready-to-send email in the user's own voice.
-
-Rules:
-- Follow the user's instruction exactly — don't add asks they didn't make, don't drop details they gave.
-- Match the user's writing style using the sent-email examples provided: sentence length, formality, typical greetings/sign-offs, phrasing. If no style examples are given, default to clear and professional.
-- If thread context is provided, stay consistent with what's already been said.
-- Never invent facts, commitments, names, or dates not given to you.
-- You draft only. You never send. The user always reviews and sends.
-You MUST output your response in this exact JSON format only:
-{
-  "subject": "Email subject line here",
-  "body": "Formatted email body here"
-}
-Do not write anything else—only raw JSON!
-`;
+import { emailDraftSystemPrompt } from "../prompts/emailDraft.prompt.js";
+import validator from "validator";
 
 type Tone = "casual" | "formal" | "professional";
 interface RequestBody {
@@ -74,12 +57,11 @@ export const generateEmail = async (req: Request<{}, {}, RequestBody>, res: Resp
 
 
 
-
         // API Call: Passing systemInstruction + contents array
         const response = await ai.models.generateContent({
-            model: "gemini-3.6-flash",
+            model: "gemini-3.5-flash-lite",
             config: {
-                systemInstruction: systemPrompt,
+                systemInstruction: emailDraftSystemPrompt,
                 responseMimeType: "application/json",
             },
             contents: historyArray,
