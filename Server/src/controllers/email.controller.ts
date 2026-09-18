@@ -143,6 +143,50 @@ export const generateEmail = async (req: Request<{}, {}, RequestBody>, res: Resp
 
 }
 
+export const workspacedata = async (req: Request, res: Response) => {
+
+
+    // updateAt:-1 latest laakar dega mujhe draft document , aur userId: req.user._id yeh isiliye likha h taaki jo user logged in h ussi ka draft laakr de kisi aur user ka nahi .
+    const data = await History.findOne({ userId: req.user._id, status: "draft" }).sort({ updatedAt: -1 });
+
+    const email = data?.emailData?.[0];
+
+    if (!email) {
+        // User ke paas active draft nahi h to workspace empty state ke saath open hoga.
+        return res.status(200).json({ draft: null });
+    }
+
+    const { body, subject } = email;
+
+
+    res.status(200).json({
+        historyId: data._id,
+        body: body,
+        subject: subject,
+    })
+
+
+}
+
+export const clearDraft = async (req: Request<{ historyId: string }>, res: Response) => {
+    try {
+        // userId ke saath delete karne se user sirf apna current draft hi clear kar sakta h.
+        const clearedDraft = await History.findOneAndDelete({
+            _id: req.params.historyId,
+            userId: req.user._id,
+            status: "draft",
+        });
+
+        if (!clearedDraft) {
+            return res.status(404).json({ message: "Draft not found" });
+        }
+
+        return res.status(200).json({ message: "Draft cleared" });
+    } catch (error) {
+        console.error("Clear Draft Controller Error:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+}
 
 interface SendEmailBody {
 
