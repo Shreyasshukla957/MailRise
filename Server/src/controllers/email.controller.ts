@@ -11,7 +11,6 @@ type Tone = "casual" | "formal" | "professional";
 interface RequestBody {
     tone: Tone,
     context: string,
-    recipient: string,
     historyId?: string,
 }
 
@@ -21,11 +20,11 @@ export const generateEmail = async (req: Request<{}, {}, RequestBody>, res: Resp
 
     try {
 
-        const { tone, context, recipient, historyId } = req.body;
+        const { tone, context, historyId } = req.body;
 
-        if (!tone || !context || !recipient) {
+        if (!tone || !context) {
             return res.status(400).json(
-                { message: "Tone, context, and recipient are required" }
+                { message: "Tone and context are required" }
             );
         }
 
@@ -33,23 +32,48 @@ export const generateEmail = async (req: Request<{}, {}, RequestBody>, res: Resp
         let historyDoc = null;
 
         if (historyId) {
-            historyDoc = await History.findById(historyId);
+            // userId se confirm hota h ki user sirf apne hi draft ko edit kar sakta h.
+            historyDoc = await History.findOne({ _id: historyId, userId: req.user._id });
         }
 
-        const userPrompt = `Write a ${tone} email to ${recipient}. Context: ${context}`;
+        // Current user ki instruction ko tone ke saath Gemini ko dene ke liye prompt banaya h.
+        const userPrompt = `Write a ${tone} email. Context: ${context}`;
 
+        // Yeh temporary array sirf Gemini ko previous context bhejne ke liye h, DB me store nahi hota.
         let historyArray: any[] = [];
 
-        // historyDoc.prompt yeh bhi true hona chahiye tabhi prompts nikal skte h
+        // Edit request me hi purane prompts available honge, initial draft me historyDoc null rahega.
         if (historyDoc && historyDoc.prompt) {
-            historyDoc.prompt.forEach((item) => {
-                historyArray.push({
-                    role: item.role,
-                    parts: [{ text: item.message }],
+            historyDoc.prompt
+                // Model ko sirf user ki prompt as a context deni h.
+                .filter((item) => item.role === "user")
+                // slice(-3) taaki last k index k 3 prompt jaaye woh bhi sirf user k kyunki filter use kiya h.
+                .slice(-3)
+                .forEach((item) => {
+                    // Har selected user prompt Gemini ke expected role/parts format me add ho raha h.
+                    historyArray.push({
+                        role: "user",
+                        parts: [{ text: item.message }],
+                    });
                 });
-            })
         }
 
+        // emailData overwrite hota h, isliye index 0 par hamesha latest saved draft milta h.
+        const modelresponse = historyDoc?.emailData?.[0];
+
+        if (modelresponse) {
+            // Latest subject/body ko previous model response ki tarah bhej rahe h, edit ko current email ka context milega.
+            historyArray.push({
+                role: "model",
+                parts: [
+                    {
+                        text: `Subject: ${modelresponse.subject}\nBody: ${modelresponse.body}`,
+                    },
+                ],
+            });
+        }
+
+        // Last me current instruction add hoti h, jiske according Gemini latest draft ko create/edit karega.
         historyArray.push({
             role: "user",
             parts: [{ text: userPrompt }]
@@ -82,7 +106,6 @@ export const generateEmail = async (req: Request<{}, {}, RequestBody>, res: Resp
             historyDoc.prompt.push({ role: "model", message: jsonResponseText });
             historyDoc.emailData = [{
                 userMail: (req.user as any)?.emailId || "",
-                recipient,
                 subject: data?.message?.subject || data?.subject,
                 body: data?.message?.body || data?.body,
             }];
@@ -98,7 +121,6 @@ export const generateEmail = async (req: Request<{}, {}, RequestBody>, res: Resp
                 ],
                 emailData: [{
                     userMail: (req.user as any)?.emailId,
-                    recipient,
                     subject: data?.message?.subject || data?.subject,
                     body: data?.message?.body || data?.body,
                 }],
@@ -108,7 +130,6 @@ export const generateEmail = async (req: Request<{}, {}, RequestBody>, res: Resp
 
         res.status(200).json({
             historyId: historyDoc._id,
-            recipient:recipient,
             subject: data?.message?.subject || data?.subject,
             body: data?.message?.body || data?.body,
         });
