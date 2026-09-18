@@ -206,6 +206,12 @@ export const sendEmail = async (req: Request<{}, {}, SendEmailBody>, res: Respon
             return res.status(400).json({ message: "All fields are required" });
         }
 
+        const normalizedRecipient = recipient.trim();
+
+        if (!validator.isEmail(normalizedRecipient)) {
+            return res.status(400).json({ message: "Email is not correct" });
+        }
+
         const user = req.user as any;
 
         if (!user) {
@@ -232,23 +238,48 @@ export const sendEmail = async (req: Request<{}, {}, SendEmailBody>, res: Respon
             userEmail: emailId,
             refreshtoken,
             access_token,
-            recipient,
+            recipient: normalizedRecipient,
             subject,
             body,
 
         });
 
-        if (! data || ! data.accepted || data.accepted.length === 0) {
-            await History.findByIdAndUpdate(historyId , {status:"failed"} , {runValidators:true , new:true})
-            return res.status(400).json({message:"Email wasn't send , problem occured !"});
+        if (!data || !data.accepted || data.accepted.length === 0) {
+            // userId se confirm hota h ki user sirf apne hi draft ka status update kar sakta h.
+            const failedEmail = await History.findOneAndUpdate({ _id: historyId, userId: req.user._id }, {
+                status: "failed",
+                emailData: [{ userMail: emailId, recipient: normalizedRecipient, subject, body }],
+            }, {
+                // Replaces deprecated `new: true`; return the updated document.
+                returnDocument: "after",
+                runValidators: true,
+            })
+
+            if (!failedEmail) {
+                return res.status(404).json({ message: "Draft not found" });
+            }
+
+            return res.status(400).json({ message: "Email wasn't send , problem occured !" });
         }
 
-       const latestdata = await History.findByIdAndUpdate(historyId , {status:"success"} , {runValidators:true , new:true});
+        // userId se confirm hota h ki user sirf apne hi draft ko sent mark kar sakta h.
+        const latestdata = await History.findOneAndUpdate({ _id: historyId, userId: req.user._id }, {
+            status: "success",
+            emailData: [{ userMail: emailId, recipient: normalizedRecipient, subject, body }],
+        }, {
+            // Replaces deprecated `new: true`; return the updated document.
+            returnDocument: "after",
+            runValidators: true,
+        });
+
+        if (!latestdata) {
+            return res.status(404).json({ message: "Draft not found" });
+        }
 
         res.status(200).json({
-            message:"Email was sent.",
-            historyId:latestdata?._id,
-            status:latestdata?.status || "success",
+            message: "Email was sent.",
+            historyId: latestdata?._id,
+            status: latestdata?.status || "success",
         })
 
     }
